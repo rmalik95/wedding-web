@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment files can contain local secrets. Keep the safe template visible.
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local QA artifacts
+work/
+*.tsbuildinfo
+
+# Private source material used to create the invitation. The optimized
+# derivatives in public/images/ are the only image assets the site needs.
+/*.jpg
+/*.jpeg
+/*.png
+/*.gif
+/*.webp
+/*.[Pp][Dd][Ff]
+
+# Local agent handoff files
+AGENTS.md
+agents.md
+agent7
+agent7.*
+AGENT7
+AGENT7.*
