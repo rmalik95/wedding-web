@@ -1,126 +1,157 @@
-# Rishabh & Glyra Wedding Invitation
+# Interactive Wedding Invitation Website
 
-This repository contains the responsive wedding invitation website for Rishabh and Glyra. It turns the original Canva invitation into an interactive editorial correspondence experience with an envelope opening, date reveal, countdown, photo carousel, story map, destination postcards, and a long form wish composer.
+This repository contains a responsive, single-page invitation website built with React, TypeScript, Vite, native CSS, and jsPDF. It presents an editorial correspondence experience with an animated envelope opening, date reveal, countdown, photo carousel, story section, illustrated map, destination postcard gallery, and long-form postcard composer.
 
-The invitation uses one visual system: oxblood red, warm ivory paper, antique gold, muted olive, printed rules, serif typography, and restrained physical paper motion. There is no RSVP flow.
+The interface uses one cohesive visual system with warm paper tones, deep red, antique gold, serif typography, printed rules, tactile composition, and restrained motion. It is designed for desktop, tablet, and mobile browsers. There is no RSVP flow.
 
-## What the repository does
+## Features
 
-Guests can open the wax sealed envelope, watch the candle and thread animation, read the Hong Kong wedding invitation, see the Davao send off details, scratch to reveal the wedding date, view the live countdown, browse the supplied photo carousel, read the story and journey map, and choose from 11 destination postcards.
+- Animated envelope, candle, thread, wax seal, flap, and emerging invitation pieces.
+- Keyboard-accessible skip action and `prefers-reduced-motion` support.
+- Scratch-to-reveal date interaction with accessible reveal buttons.
+- Timezone-aware live countdown with wedding-day and post-event states.
+- Controllable photo carousel with previous, next, pause, play, keyboard, and touch support.
+- Responsive editorial event, story, and illustrated map sections.
+- Destination postcard gallery with accessible dialog-based wish composer.
+- Local draft storage with validation and clear delivery state.
+- Designed postcard PDF preview and download with continuation pages for long messages.
+- Reusable styled HTML email builder and PDF export API for future server integration.
+- No analytics, autoplay audio, payment flow, guest tracking, or public email service is included.
 
-The destinations are Newcastle, Davao, Tanzania, India, Hungary, London, Edinburgh, Portugal, Amsterdam, Alnwick Castle, and Hong Kong. Each postcard uses custom generated destination artwork without the couple or map crops. Guests can write a wish, save it locally, preview it as a designed postcard PDF, or download it. Long messages flow across continuation pages without being truncated.
+## Current integration status
 
-The supplied couple illustration appears beside the countdown. The supplied couple in a teacup illustration appears beneath the celebration details. The original journey map remains in Our Story and is blended into that page without a frame.
+Email delivery is intentionally not connected. The browser currently lets a visitor save a draft locally, preview the complete postcard PDF, and download it. It does not claim that a message was sent.
 
-## Wedding content
+The future email integration should send a styled HTML postcard body and attach the complete generated PDF. The implementation contract is documented in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). The HTML builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts), and the PDF generator is [`src/components/postcardExport.ts`](src/components/postcardExport.ts).
 
-- Hong Kong wedding: 21 October 2026, 10:30 AM, Cotton Tree Drive, Central, Hong Kong. Reception follows.
-- Davao send off: 17 October 2026, 6:30 PM, Davao City.
-- The PDF spells the bride's name `Glyra`. Confirm whether `Glyra` or `Glara` should be used before publishing.
-- The Davao venue was not present in the source PDF, so the invitation currently says Davao City without inventing an address.
+A future server must provide the email provider, recipient configuration, secure endpoint, validation, rate limiting, sender verification, attachment handling, and secret storage. Credentials must never be placed in browser code.
 
-## Current scope and deferred work
-
-Email delivery is not connected. The site does not claim that a wish has been emailed. The future email should contain a styled postcard body with destination artwork and the complete escaped message, plus the complete paginated postcard PDF as an attachment.
-
-The reusable HTML email builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts). The PDF factory is [`src/components/postcardExport.ts`](src/components/postcardExport.ts). The email contract is [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md).
-
-A secure server endpoint, provider, recipient address, validation, rate limiting, sender verification, and server side attachment generation still need to be configured. Keep credentials out of browser code. No RSVP, guest tracking, payment, analytics, or autoplay audio is included.
-
-## How to run
+## Requirements
 
 Use Node.js 20.19 or newer, or Node.js 22.12 or newer.
 
+## Development
+
+Install dependencies:
+
 ```sh
 npm install
+```
+
+Start the development server:
+
+```sh
 npm run dev
 ```
 
-Open the local URL printed by Vite. Create and preview a production build with:
+Vite prints the local URL. The default is `http://localhost:5173` when that port is available.
+
+Create a production build:
 
 ```sh
 npm run build
+```
+
+Preview the production build:
+
+```sh
 npm run preview
 ```
 
-The deployable output is `dist/`. No deployment or GitHub push has been performed by this project work.
+The deployable output is written to `dist/`. No hosting or GitHub push is performed by the repository scripts.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `npm install` | Install dependencies |
-| `npm run dev` | Start Vite development mode |
-| `npm run build` | TypeScript check and production build |
+| `npm install` | Install project dependencies |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Run TypeScript checking and create the production build |
 | `npm run preview` | Serve the production build locally |
 
 ## Project structure
 
 ```text
 src/
-  App.tsx                         Main invitation composition and content
+  App.tsx                         Main page composition
   main.tsx                        React entry point
-  styles.css                      Shared tokens, layout, type, responsive rules
-  components/Envelope.tsx         Envelope, candle, thread, flap animation
-  components/DateReveal.tsx       Scratch surfaces and Hong Kong countdown
-  components/PhotoCarousel.tsx    Accessible supplied photo carousel
-  components/Postcards.tsx        Destination gallery and wish composer
-  components/postcardExport.ts    Full visual, paginated PDF generator
-  lib/postcardEmail.ts            Escaped styled email body for future transport
-public/images/                    Optimized WebP website assets
-public/fonts/                     Local fonts and license texts
-docs/                             PRD, QA, artwork, and email specifications
-AGENTS.md                         Repository rules for coding agents
-index.html                        Page metadata and React mount point
-package.json                      Scripts and dependency manifest
+  styles.css                      Shared design tokens and responsive layout
+  components/Envelope.tsx         Opening animation
+  components/DateReveal.tsx       Scratch surfaces and countdown
+  components/PhotoCarousel.tsx    Accessible photo carousel
+  components/Postcards.tsx        Gallery and wish composer
+  components/postcardExport.ts    Paginated postcard PDF generator
+  lib/postcardEmail.ts            Escaped styled email body builder
+public/images/                    Optimized website image assets
+public/fonts/                     Local font files and license texts
+docs/                             Requirements, QA, art, and email specifications
+AGENTS.md                         Repository instructions for coding agents
+index.html                        Document metadata and React mount point
+package.json                      Scripts and dependencies
 package-lock.json                 Locked dependency versions
 tsconfig.json                     TypeScript configuration
 ```
 
 ## Assets
 
-- `embrace.webp`, `balcony.webp`, and `woodland.webp` are the photo carousel images.
-- `couple.webp` is the wedding outfit illustration beside the countdown.
-- `teacup.webp` is the supplied couple in a teacup illustration beneath the celebrations.
-- `journey.webp` is the original illustrated journey map used in Our Story.
-- `postcard-*-illustrated.webp` are the 11 custom generated destination illustrations used by the postcard gallery and composer.
+Website-ready image derivatives live under `public/images/`. The postcard gallery uses the `postcard-*-illustrated.webp` files. The source photographs, design source files, PDFs, local QA screenshots, environment files, and agent handoff files are excluded by `.gitignore`.
 
-The original private photographs and Canva PDF are ignored by `.gitignore`. The optimized website assets in `public/images/` are required by the site and should remain available to GitHub. Generated artwork prompts and provenance are documented in [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md).
+Images have explicit dimensions, deliberate crops, descriptive alternative text, and lazy loading where appropriate. Fonts are stored locally with their license files. No third-party image URLs are required at runtime.
 
-## Design and implementation
+## Technical and design notes
 
-- React, TypeScript, Vite, native CSS, and jsPDF are used.
-- CSS variables keep colors, typography, and spacing consistent.
-- Motion uses transform and opacity where possible and respects `prefers-reduced-motion`.
-- Native controls, labels, focus states, pointer scratching, touch alternatives, dialog behavior, and live status messages support keyboard and touch users.
-- Images have explicit dimensions, lazy loading below the first view, descriptive alternative text, and deliberate crops.
-- Layout is checked at 375, 768, and 1440 pixels with no horizontal overflow.
-- The PDF is browser rendered so long messages, accents, curly punctuation, emoji, and long tokens can be preserved. PDF pages are raster artwork, so their text is not selectable. The styled HTML email is the accessible text counterpart.
+- React, TypeScript, Vite, native CSS, and jsPDF are used without an animation framework.
+- CSS variables keep colors, typography, spacing, and component states coherent.
+- Motion uses compositor-friendly transforms and opacity, and is disabled or reduced when requested by the operating system.
+- Native controls, labels, visible focus states, keyboard alternatives, pointer input, touch alternatives, modal behavior, and live status messages support accessible interaction.
+- Layout is checked at 375, 768, and 1440 pixel widths with no horizontal overflow.
+- The PDF renderer wraps long text, including long unbroken tokens, and creates continuation pages instead of truncating content. PDF pages are raster artwork, so their text is not selectable.
+- The HTML email builder escapes user content and is intended for server-side use only.
 
 ## Verification
 
-See [`docs/QA.md`](docs/QA.md). Verification covers the production build, envelope opening, reduced motion, scratch reveal, countdown states, carousel controls, all 11 postcards, dialog validation, local drafts, long message PDF generation, preview and download, focus containment, Escape close, focus restoration, mobile layout, desktop layout, and browser runtime errors.
+Verification notes are maintained in [`docs/QA.md`](docs/QA.md). The checks cover:
+
+- TypeScript and Vite production builds;
+- desktop, tablet, and mobile layout and overflow;
+- opening animation and reduced-motion behavior;
+- scratch interaction and countdown states;
+- carousel controls and pause behavior;
+- all postcard destinations and dialog behavior;
+- empty-form validation, local drafts, PDF preview, and PDF download;
+- long-message preservation across continuation pages;
+- keyboard focus containment, Escape close, and focus restoration; and
+- browser runtime errors in exercised flows.
+
+Run `npm run build` before publishing. Browser checks use the local production preview and an installed Chromium runtime.
+
+## Documentation map
+
+- [`docs/PRD.md`](docs/PRD.md): product scope, interaction requirements, design direction, and acceptance criteria.
+- [`docs/QA.md`](docs/QA.md): browser and production verification notes.
+- [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md): generated artwork prompts and provenance.
+- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): future email payload, inline artwork, and complete PDF attachment contract.
+- [`AGENTS.md`](AGENTS.md): repository-specific instructions for coding agents.
 
 ## What belongs in this README
 
-This file is the setup and maintenance handoff. Keep here:
+Keep this file focused on the public technical handoff:
 
-- what the product is and what guests can do;
-- confirmed content and decisions still needed;
-- prerequisites and exact development, build, preview, and deployment commands;
-- high level source and asset structure;
-- design, accessibility, performance, and content constraints;
-- current integration status and links to deferred-work contracts;
-- verification commands and known limitations; and
-- licensing and asset provenance needed before publishing.
+- a neutral product overview;
+- feature behavior and current integration status;
+- prerequisites and exact development commands;
+- source structure and asset conventions;
+- accessibility, performance, and responsive constraints;
+- verification steps and known technical limitations; and
+- links to detailed project documentation.
 
-Keep detailed agent operating rules in [`AGENTS.md`](AGENTS.md), product requirements in [`docs/PRD.md`](docs/PRD.md), QA evidence in [`docs/QA.md`](docs/QA.md), artwork provenance in [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md), and email requirements in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). Do not put secrets, `.env` values, the private Canva PDF, raw source photos, or local QA screenshots in this README or repository.
+Do not put private names, personal schedules, addresses, personal correspondence, raw source photos, private design PDFs, secrets, `.env` values, local QA output, or agent handoff content in this README.
 
-## Before publishing
+## Publishing checklist
 
-1. Confirm the bride's preferred spelling.
-2. Confirm the Davao venue or keep the city only wording.
-3. Add the secure email service and recipient configuration described in `docs/POSTCARD-EMAIL.md`.
-4. Test postcard emails and PDF attachments with short and very long wishes.
-5. Run `npm run build` and the browser checks again.
-6. Deploy `dist/` to the chosen host, configure the domain, then add and push the intended source files to GitHub yourself.
+1. Confirm that all public copy and assets are approved.
+2. Configure the secure email service separately from the browser application.
+3. Test short and very long postcard messages through the email and attachment path.
+4. Run `npm run build` and the documented browser checks.
+5. Deploy `dist/` to the chosen static host.
+6. Add and push the intended source files to the remote repository manually.
