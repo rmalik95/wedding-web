@@ -27,11 +27,8 @@ export default function Envelope({ onOpen }: { onOpen: () => void }) {
 
   return (
     <section className={`envelope-scene${opening ? ' is-opening' : ''}${reduced ? ' is-reduced' : ''}`} aria-label="Your wedding invitation">
-      <div className="envelope-topline"><span>A LETTER FOR YOU</span><span>21.10.2026</span></div>
       <div className="envelope-introduction">
-        <p className="envelope-eyebrow">SOME THINGS ARE BETTER OPENED TOGETHER</p>
-        <h1>You’ve received a little love.</h1>
-        <p>From Rishabh &amp; Glyra, with all our hearts.</p>
+        <h1>A mail has arrived.</h1>
       </div>
       <div className="envelope-stage">
         <div className="envelope-object" aria-hidden="true">
@@ -41,13 +38,12 @@ export default function Envelope({ onOpen }: { onOpen: () => void }) {
           <div className="envelope-photo"><img src="/images/woodland.webp" width="420" height="560" alt="" /><span>Always, you &amp; me.</span></div>
           <div className="envelope-front" />
           <div className="envelope-flap" />
-          <div className="envelope-address">To our favourite people,<br /><span>this one’s for you.</span></div>
           <div className="envelope-thread"><span className="thread-ember" /></div>
         </div>
         <button className="envelope-seal" onClick={openLetter} disabled={opening} aria-label="Light the candle and open your invitation"><span className="seal-rim"><span>R<span className="seal-amp">&amp;</span>G</span><small>WITH LOVE</small></span></button>
         <div className="envelope-candle" aria-hidden="true"><div className="candle-flame" /><div className="candle-wick" /><div className="candle-body" /><div className="candle-dish" /></div>
       </div>
-      <div className="envelope-footer"><p className="envelope-hint" role="status">{opening ? 'A little spark. A new beginning…' : 'Touch the seal. Let the story unfold.'}</p><button className="envelope-skip" onClick={() => finish.current()}>Open invitation <span aria-hidden="true">↗</span></button></div>
+      <div className="envelope-footer"><p className="sr-only" role="status">{opening ? 'The invitation is opening.' : 'Activate the wax seal or open invitation button to begin.'}</p><button className="envelope-skip" onClick={() => finish.current()}>Open invitation <span aria-hidden="true">↗</span></button></div>
     </section>
   );
 }
