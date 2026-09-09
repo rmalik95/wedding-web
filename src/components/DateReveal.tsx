@@ -5,6 +5,12 @@ import { wedding, weddingStart } from '../config';
 const WEDDING = weddingStart;
 const parts = [ { value: '21', label: 'day' }, { value: 'OCT', label: 'month' }, { value: '2026', label: 'year' } ];
 
+function CalendarAppIcon({ app }: { app: 'google' | 'apple' | 'outlook' }) {
+  if (app === 'google') return <svg className="calendar-app-icon google-calendar-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285f4" d="M4 5h16v15H4z"/><path fill="#34a853" d="M4 5h5v15H4z"/><path fill="#fbbc04" d="M9 5h6v15H9z"/><path fill="#ea4335" d="M15 5h5v15h-5z"/><path fill="#fff" d="M6 7h12v11H6z"/><path fill="#4285f4" d="M8 10h8v2H8zm0 3h5v2H8z"/></svg>;
+  if (app === 'apple') return <svg className="calendar-app-icon apple-calendar-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="3" fill="#fff" stroke="currentColor" strokeWidth="1.5"/><path d="M3.75 9h16.5" stroke="#e25c55" strokeWidth="2"/><path d="M8 2.75v3M16 2.75v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><text x="12" y="18" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="Arial, sans-serif">21</text></svg>;
+  return <svg className="calendar-app-icon outlook-calendar-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0f6cbd" d="M4 5h11v14H4z"/><path fill="#185abd" d="M10 3h10v18H10z"/><path fill="#fff" d="M12 6h6v3h-6zm0 5h6v2h-6zm0 4h4v2h-4z"/><text x="7.5" y="15.5" textAnchor="middle" fill="#fff" fontSize="8" fontFamily="Arial, sans-serif" fontWeight="700">O</text></svg>;
+}
+
 function ScratchCircle({ value, label, revealed, onReveal }: { value: string; label: string; revealed: boolean; onReveal: () => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const previous = useRef<{ x: number; y: number } | null>(null);
@@ -99,14 +105,14 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
     {!allRevealed && <button className="date-reveal-all" onClick={() => setRevealed([true, true, true])}>Or, reveal our date <span aria-hidden="true">↗</span></button>}
     <div className="date-announcement" role="status">{allRevealed ? `${wedding.dateLabel}. Hong Kong. Our wedding day.` : ''}</div>
     {allRevealed && <div className="date-countdown">
-      <p className="date-countdown-title">{onWeddingDay ? 'Today is our forever.' : now > WEDDING ? 'Our forever has begun.' : 'Counting the moments until we say “I do”.'}</p>
+      <p className="date-countdown-title">{onWeddingDay ? 'Today is our forever.' : now > WEDDING ? 'Our forever has begun.' : 'Counting the moments until we say “I do” in Hong Kong.'}</p>
       {now < WEDDING && <div className="date-countdown-values" role="timer" aria-label="Time until our wedding">
         {countdown.map((value, index) => <div key={index}><span>{String(value).padStart(2, '0')}</span><small>{['days', 'hours', 'minutes', 'seconds'][index]}</small></div>)}
       </div>}
-      <p className="date-time-note">{wedding.dateLabel} · {wedding.timeLabel} · Hong Kong</p>
       <div className="date-calendar-actions" aria-label="Save the wedding date">
-        <a className="date-calendar-link" href={wedding.googleCalendarUrl} target="_blank" rel="noreferrer">Save the date in Google Calendar <span aria-hidden="true">↗</span></a>
-        <button type="button" className="date-calendar-link" onClick={onCalendar}>Download for Apple Calendar &amp; Outlook <span aria-hidden="true">↓</span></button>
+        <a className="date-calendar-link" href={wedding.googleCalendarUrl} target="_blank" rel="noreferrer" aria-label="Save the date in Google Calendar"><CalendarAppIcon app="google"/><span>Google Calendar</span><span aria-hidden="true">↗</span></a>
+        <button type="button" className="date-calendar-link" onClick={onCalendar} aria-label="Download the date for Apple Calendar"><CalendarAppIcon app="apple"/><span>Apple Calendar</span><span aria-hidden="true">↓</span></button>
+        <button type="button" className="date-calendar-link" onClick={onCalendar} aria-label="Download the date for Outlook"><CalendarAppIcon app="outlook"/><span>Outlook</span><span aria-hidden="true">↓</span></button>
       </div>
     </div>}
     <figure className="date-illustration reveal"><img src="/images/couple.webp" alt="Illustration of Rishabh and Glyra in their wedding outfits" width="300" height="300" loading="lazy" /></figure>
