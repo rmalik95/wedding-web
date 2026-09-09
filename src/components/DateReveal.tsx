@@ -114,7 +114,7 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
         <button type="button" className="date-calendar-link" onClick={onCalendar} aria-label="Download the date for Apple Calendar"><CalendarAppIcon app="apple"/><span>Apple Calendar</span><span aria-hidden="true">↓</span></button>
         <button type="button" className="date-calendar-link" onClick={onCalendar} aria-label="Download the date for Outlook"><CalendarAppIcon app="outlook"/><span>Outlook</span><span aria-hidden="true">↓</span></button>
       </div>
-      <figure className="date-teacup-keepsake"><img src="/images/teacup.webp" alt="Illustration of a bride and groom sitting together in a teacup" width="627" height="627" loading="lazy" /></figure>
+      <figure className="date-teacup-keepsake"><img src="/images/teacup-transparent.png" alt="Illustration of a bride and groom sitting together in a teacup" width="627" height="627" loading="lazy" /></figure>
     </div>}
   </section>;
 }

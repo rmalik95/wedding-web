@@ -94,7 +94,7 @@ tsconfig.json                     TypeScript configuration
 
 ## Assets
 
-Website-ready image derivatives live under `public/images/`. The postcard gallery uses the `postcard-*-illustrated.webp` files. The source photographs, design source files, PDFs, local QA screenshots, environment files, and agent handoff files are excluded by `.gitignore`.
+Website-ready image derivatives live under `public/images/`. The postcard gallery uses the `postcard-*-illustrated.webp` files, and the countdown keepsake uses the transparent `teacup-transparent.png` derivative. The source photographs, design source files, PDFs, local QA screenshots, environment files, and agent handoff files are excluded by `.gitignore`.
 
 Images have explicit dimensions, deliberate crops, descriptive alternative text, and lazy loading where appropriate. Fonts are stored locally with their license files. No third-party image URLs are required at runtime.
 
