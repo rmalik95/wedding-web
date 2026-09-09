@@ -13,7 +13,7 @@ The interface uses one cohesive visual system with warm paper tones, deep red, a
 - Post-reveal Google Calendar save-the-date link and downloadable `.ics` event for Apple Calendar, Outlook, and compatible apps.
 - Controllable photo carousel with previous, next, pause, play, keyboard, and touch support.
 - Responsive editorial event, story, and illustrated map sections.
-- Destination postcard gallery with accessible dialog-based wish composer.
+- Responsive destination postcard wall on desktop and tablet, with a swipeable mobile gallery and accessible dialog-based wish composer.
 - Local draft storage as a pdf.
 - Designed postcard PDF preview and download with continuation pages for long messages.
 - Cloudflare Pages and Resend delivery for complete postcard PDFs. Configure `RESEND_API_KEY` as a Cloudflare encrypted secret and set `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as Pages variables before deploying.
