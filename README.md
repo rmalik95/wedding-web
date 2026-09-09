@@ -13,7 +13,7 @@ The interface uses one cohesive visual system with warm paper tones, deep red, a
 - Controllable photo carousel with previous, next, pause, play, keyboard, and touch support.
 - Responsive editorial event, story, and illustrated map sections.
 - Destination postcard gallery with accessible dialog-based wish composer.
-- Local draft storage with validation and clear delivery state.
+- Local draft storage as a pdf.
 - Designed postcard PDF preview and download with continuation pages for long messages.
 - Cloudflare Pages and Resend delivery for complete postcard PDFs. Configure `RESEND_API_KEY` as a Cloudflare encrypted secret and set `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as Pages variables before deploying.
 - Reusable styled HTML email builder and PDF export API for future server integration.
