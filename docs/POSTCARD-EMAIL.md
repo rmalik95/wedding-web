@@ -1,6 +1,6 @@
 # Postcard delivery contract
 
-Email delivery remains intentionally unconnected. The recipient must receive a visual postcard, not just a plain-text wish.
+Email delivery is provided by the Cloudflare Pages Function at `functions/api/send-postcard.ts`, using Resend. The recipient receives a visual postcard, not just a plain-text wish.
 
 ## Required future email payload
 
@@ -10,7 +10,7 @@ Email delivery remains intentionally unconnected. The recipient must receive a v
 4. Mail clients may clip very long HTML emails. The attached paginated PDF is the complete, portable postcard in those cases. There is no claim that every mail client can display arbitrarily long messages inline without clipping.
 5. Configure recipient, secure server endpoint, provider, validation, rate limits and verified sender later. Handle transport size limits with an explicit error or a secure complete-document link rather than silent truncation. Generate or validate attachments on the server and never trust client HTML.
 
-Current downloads/previews are local and do not send mail. The form must say so until the integration exists.
+The form can send a postcard, preview it, or download it. The mail transport accepts only known destinations, validates the uploaded PDF, rate-limits requests, and reads Resend settings exclusively from Cloudflare Pages environment bindings. Configure `RESEND_API_KEY` as an encrypted secret, plus `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as production variables. Never place any of these values in browser code.
 
 ## PDF rendering
 

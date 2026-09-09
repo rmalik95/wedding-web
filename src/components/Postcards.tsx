@@ -26,6 +26,7 @@ export default function Postcards() {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
   const [exporting, setExporting] = useState(false);
+  const [sending, setSending] = useState(false);
   const exportBusy = useRef(false);
   const exportUrls = useRef<string[]>([]);
   useEffect(() => () => exportUrls.current.forEach(url => URL.revokeObjectURL(url)), []);
@@ -131,6 +132,38 @@ export default function Postcards() {
     }
   }
 
+  async function sendPostcard() {
+    if (exportBusy.current || sending) return;
+    if (!name.trim() || !message.trim() || !selected) {
+      setStatus('Please add your name and a wish first.');
+      document.getElementById(!message.trim() ? 'postcard-message' : 'postcard-name')?.focus();
+      return;
+    }
+    exportBusy.current = true;
+    setSending(true);
+    setStatus('Preparing your complete postcard…');
+    try {
+      const pdf = await createPostcardPdf({ destination: selected, imageUrl: imageFor(selected), name, message }, (page, total) => setStatus(`Preparing postcard page ${page} of ${total}…`));
+      const data = new FormData();
+      data.set('destination', selected);
+      data.set('name', name.trim());
+      data.set('message', message.trim());
+      data.set('pdf', new File([pdf], `wedding-postcard-${selected.toLowerCase().replaceAll(' ', '-')}.pdf`, { type: 'application/pdf' }));
+      data.set('website', '');
+      setStatus('Sending your postcard…');
+      const response = await fetch('/api/send-postcard', { method: 'POST', body: data, credentials: 'same-origin' });
+      const result: unknown = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(typeof result === 'object' && result && 'error' in result && typeof result.error === 'string' ? result.error : 'Please try again shortly.');
+      try { localStorage.setItem(draftKey, JSON.stringify({ name, message, destination: selected })); setSavedContent(JSON.stringify({ name, message })); } catch { /* Sending does not depend on browser storage. */ }
+      setStatus('Your postcard has been sent to Rishabh & Glyra. Thank you.');
+    } catch (error) {
+      setStatus(error instanceof Error ? `Your postcard was not sent. ${error.message}` : 'Your postcard was not sent. Please try again.');
+    } finally {
+      exportBusy.current = false;
+      setSending(false);
+    }
+  }
+
   function move(direction: number) {
     const next = Math.max(0, Math.min(destinations.length - 1, active + direction));
     const card = track.current?.children[next] as HTMLElement | undefined;
@@ -161,7 +194,7 @@ export default function Postcards() {
         </button>)}
       </div>
       <div className="postcards-controls"><p>{String(active + 1).padStart(2, '0')} <span>/ {destinations.length} places, one story</span></p><div><button type="button" onClick={() => move(-1)} disabled={active === 0} aria-label="Previous postcard">←</button><button type="button" onClick={() => move(1)} disabled={atEnd} aria-label="Next postcard">→</button></div></div>
-      <p className="postcards-delivery-note">For now, your words can be saved on this device or downloaded. Email delivery is coming soon.</p>
+      <p className="postcards-delivery-note">Write a little love from anywhere in our story. Your complete postcard will be delivered to us by email.</p>
       {selected && <dialog ref={dialog} className="postcard-dialog" aria-labelledby="postcard-dialog-title" onCancel={() => setSelected(null)} onClick={event => { if (event.target === dialog.current) { const bounds = dialog.current.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setSelected(null); } }}>
         <button className="postcard-close" type="button" onClick={() => setSelected(null)} aria-label="Close postcard">×</button>
         <div className="postcard-dialog-art"><img src={imageFor(selected)} alt={postcardDetails[selected][1]} width="480" height="360" /><span>Greetings from {selected}</span></div>
@@ -173,8 +206,8 @@ export default function Postcards() {
           <textarea id="postcard-message" name="message" value={message} onChange={e => setMessage(e.target.value)} placeholder="Here's to your next chapter…" required rows={5} />
           <label htmlFor="postcard-name">With love, from</label>
           <input id="postcard-name" name="name" autoComplete="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required />
-          <p className="postcard-form-note">Your illustrated PDF includes every word, with extra pages for longer wishes. Preview or download it to keep. Email delivery isn't connected yet.</p>
-          <div className="postcard-form-actions" aria-busy={exporting}><button type="submit">Save draft</button><button type="button" disabled={exporting} onClick={() => exportPdf(true)}>Preview full postcard ↗</button><button type="button" disabled={exporting} onClick={() => exportPdf(false)}>{exporting ? 'Preparing PDF…' : 'Download postcard PDF ↓'}</button></div>
+          <p className="postcard-form-note">Your illustrated PDF includes every word, with extra pages for longer wishes. Send it to us, preview it, or keep a downloaded copy.</p>
+          <div className="postcard-form-actions" aria-busy={exporting || sending}><button type="button" disabled={sending || exporting} onClick={sendPostcard}>{sending ? 'Sending postcard…' : 'Send postcard ↗'}</button><button type="submit" disabled={sending}>Save draft</button><button type="button" disabled={exporting || sending} onClick={() => exportPdf(true)}>Preview full postcard ↗</button><button type="button" disabled={exporting || sending} onClick={() => exportPdf(false)}>{exporting ? 'Preparing PDF…' : 'Download postcard PDF ↓'}</button></div>
           <p className="postcard-status" role="status">{status}</p>
         </form>
       </dialog>}
