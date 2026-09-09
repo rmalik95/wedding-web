@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import './DateReveal.css';
+import { wedding, weddingStart } from '../config';
 
-const WEDDING = new Date('2026-10-21T10:30:00+08:00').getTime();
+const WEDDING = weddingStart;
 const parts = [ { value: '21', label: 'day' }, { value: 'OCT', label: 'month' }, { value: '2026', label: 'year' } ];
 
 function ScratchCircle({ value, label, revealed, onReveal }: { value: string; label: string; revealed: boolean; onReveal: () => void }) {
@@ -73,35 +74,40 @@ function ScratchCircle({ value, label, revealed, onReveal }: { value: string; la
   </div>;
 }
 
-export default function DateReveal() {
+export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
   const [revealed, setRevealed] = useState([false, false, false]);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
   const allRevealed = revealed.every(Boolean);
   useEffect(() => {
     if (!allRevealed) return;
-    setNow(Date.now());
-    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    const update = () => setNow(Date.now());
+    update();
+    const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
   }, [allRevealed]);
   const remaining = Math.max(0, Math.floor((WEDDING - now) / 1000));
   const hongKongDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Hong_Kong', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
-  const onWeddingDay = hongKongDay === '2026-10-21';
+  const onWeddingDay = hongKongDay === wedding.hongKongDateKey;
   const countdown = [Math.floor(remaining / 86400), Math.floor(remaining / 3600) % 24, Math.floor(remaining / 60) % 60, remaining % 60];
   return <section className="date-reveal" id="date" aria-labelledby="date-heading">
     <p className="date-eyebrow">A date to keep</p>
     <h2 id="date-heading">Some things are worth<br /><em>uncovering.</em></h2>
-    <p className="date-instruction">Scratch the golden circles. Our forever is underneath.</p>
+    <p className="date-instruction">Scratch the golden circles. Our forever is underneath. Use the reveal buttons if you prefer.</p>
     <div className="date-circles">
       {parts.map((part, index) => <ScratchCircle key={part.label} {...part} revealed={revealed[index]} onReveal={() => setRevealed(previous => previous.map((item, i) => i === index || item))} />)}
     </div>
     {!allRevealed && <button className="date-reveal-all" onClick={() => setRevealed([true, true, true])}>Or, reveal our date <span aria-hidden="true">↗</span></button>}
-    <div className="date-announcement" role="status">{allRevealed ? '21 October 2026. Hong Kong. Our wedding day.' : ''}</div>
+    <div className="date-announcement" role="status">{allRevealed ? `${wedding.dateLabel}. Hong Kong. Our wedding day.` : ''}</div>
     {allRevealed && <div className="date-countdown">
       <p className="date-countdown-title">{onWeddingDay ? 'Today is our forever.' : now > WEDDING ? 'Our forever has begun.' : 'Counting the moments until we say “I do”.'}</p>
       {now < WEDDING && <div className="date-countdown-values" role="timer" aria-label="Time until our wedding">
         {countdown.map((value, index) => <div key={index}><span>{String(value).padStart(2, '0')}</span><small>{['days', 'hours', 'minutes', 'seconds'][index]}</small></div>)}
       </div>}
-      <p className="date-time-note">21 October 2026 · 10:30 AM · Hong Kong</p>
+      <p className="date-time-note">{wedding.dateLabel} · {wedding.timeLabel} · Hong Kong</p>
+      <div className="date-calendar-actions" aria-label="Save the wedding date">
+        <a className="date-calendar-link" href={wedding.googleCalendarUrl} target="_blank" rel="noreferrer">Save the date in Google Calendar <span aria-hidden="true">↗</span></a>
+        <button type="button" className="date-calendar-link" onClick={onCalendar}>Download for Apple Calendar &amp; Outlook <span aria-hidden="true">↓</span></button>
+      </div>
     </div>}
     <figure className="date-illustration reveal"><img src="/images/couple.webp" alt="Illustration of Rishabh and Glyra in their wedding outfits" width="300" height="300" loading="lazy" /></figure>
   </section>;

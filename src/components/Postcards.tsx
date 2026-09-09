@@ -32,7 +32,6 @@ export default function Postcards() {
   useEffect(() => () => exportUrls.current.forEach(url => URL.revokeObjectURL(url)), []);
   const [active, setActive] = useState(0);
   const [atEnd, setAtEnd] = useState(false);
-  const loaded = useRef(false);
   const [savedContent, setSavedContent] = useState('');
   useEffect(() => {
     if (!name.trim() && !message.trim() || JSON.stringify({name, message}) === savedContent) return;
@@ -43,6 +42,7 @@ export default function Postcards() {
   const track = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
+  const messageField = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (!selected || !dialog.current) return;
@@ -50,6 +50,7 @@ export default function Postcards() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     modal.showModal();
+    requestAnimationFrame(() => messageField.current?.focus());
     return () => {
       modal.close();
       document.body.style.overflow = previousOverflow;
@@ -57,20 +58,20 @@ export default function Postcards() {
     };
   }, [selected]);
 
-  function open(place: string) {
-    trigger.current = document.activeElement as HTMLElement;
+  function open(place: string, opener: HTMLElement) {
+    trigger.current = opener;
     setStatus('');
-    if (!loaded.current) {
-    loaded.current = true;
+    setName('');
+    setMessage('');
+    setSavedContent('');
     try {
       const draft = JSON.parse(localStorage.getItem(draftKey) || 'null');
-      if (draft && typeof draft.name === 'string' && typeof draft.message === 'string') {
+      if (draft && draft.destination === place && typeof draft.name === 'string' && typeof draft.message === 'string') {
         setName(draft.name);
         setMessage(draft.message);
         setSavedContent(JSON.stringify({ name: draft.name, message: draft.message }));
       }
     } catch { /* The form remains usable when browser storage is unavailable. */ }
-    }
     setSelected(place);
   }
 
@@ -187,7 +188,7 @@ export default function Postcards() {
         setActive(closest);
         setAtEnd(track.current.scrollLeft + track.current.clientWidth >= track.current.scrollWidth - 3);
       }}>
-        {destinations.map((place, index) => <button type="button" className="destination-postcard" key={place} onClick={() => open(place)} aria-label={`Write a postcard from ${place}`}>
+        {destinations.map((place, index) => <button type="button" className="destination-postcard" key={place} onClick={event => open(place, event.currentTarget)} aria-label={`Write a postcard from ${place}`}>
           <span className="postcard-card-top"><span>Greetings from</span><span>No. {String(index + 1).padStart(2, '0')}</span></span>
           <span className="postcard-art"><img src={imageFor(place)} alt={postcardDetails[place][1]} width="480" height="360" loading="lazy" /></span>
           <span className="postcard-card-bottom"><span className="postcard-destination"><span className="postcard-place">{place}</span><span className="postcard-country">{postcardDetails[place][0]}</span></span><span className="postcard-write">Write a wish ↗</span></span>
@@ -203,7 +204,7 @@ export default function Postcards() {
           <p className="postcard-origin">Postmarked {selected}</p>
           <p className="postcard-addressee">To Rishabh & Glyra,</p>
           <label htmlFor="postcard-message">Your wedding wish</label>
-          <textarea id="postcard-message" name="message" value={message} onChange={e => setMessage(e.target.value)} placeholder="Here's to your next chapter…" required rows={5} />
+          <textarea ref={messageField} id="postcard-message" name="message" value={message} onChange={e => setMessage(e.target.value)} placeholder="Here's to your next chapter…" required rows={5} />
           <label htmlFor="postcard-name">With love, from</label>
           <input id="postcard-name" name="name" autoComplete="name" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required />
           <p className="postcard-form-note">Your illustrated PDF includes every word, with extra pages for longer wishes. Send it to us, preview it, or keep a downloaded copy.</p>

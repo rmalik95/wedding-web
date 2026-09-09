@@ -10,22 +10,21 @@ The interface uses one cohesive visual system with warm paper tones, deep red, a
 - Keyboard-accessible skip action and `prefers-reduced-motion` support.
 - Scratch-to-reveal date interaction with accessible reveal buttons.
 - Timezone-aware live countdown with wedding-day and post-event states.
+- Post-reveal Google Calendar save-the-date link and downloadable `.ics` event for Apple Calendar, Outlook, and compatible apps.
 - Controllable photo carousel with previous, next, pause, play, keyboard, and touch support.
 - Responsive editorial event, story, and illustrated map sections.
 - Destination postcard gallery with accessible dialog-based wish composer.
 - Local draft storage as a pdf.
 - Designed postcard PDF preview and download with continuation pages for long messages.
 - Cloudflare Pages and Resend delivery for complete postcard PDFs. Configure `RESEND_API_KEY` as a Cloudflare encrypted secret and set `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as Pages variables before deploying.
-- Reusable styled HTML email builder and PDF export API for future server integration.
+- Reusable styled HTML email builder and PDF export API used by the live delivery endpoint.
 - No analytics, autoplay audio, payment flow, guest tracking, or public email service is included.
 
 ## Current integration status
 
-Email delivery is intentionally not connected. The browser currently lets a visitor save a draft locally, preview the complete postcard PDF, and download it. It does not claim that a message was sent.
+Postcard delivery is live through the Cloudflare Pages endpoint. A successful submission delivers the styled email body and complete postcard PDF to the configured recipient. Guests can also save a local draft, preview the PDF, or download it.
 
-The future email integration should send a styled HTML postcard body and attach the complete generated PDF. The implementation contract is documented in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). The HTML builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts), and the PDF generator is [`src/components/postcardExport.ts`](src/components/postcardExport.ts).
-
-A future server must provide the email provider, recipient configuration, secure endpoint, validation, rate limiting, sender verification, attachment handling, and secret storage. Credentials must never be placed in browser code.
+The implementation contract is documented in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). The HTML builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts), and the PDF generator is [`src/components/postcardExport.ts`](src/components/postcardExport.ts). Credentials remain only in Cloudflare Pages environment bindings.
 
 ## Requirements
 
@@ -131,7 +130,7 @@ Run `npm run build` before publishing. Browser checks use the local production p
 - [`docs/PRD.md`](docs/PRD.md): product scope, interaction requirements, design direction, and acceptance criteria.
 - [`docs/QA.md`](docs/QA.md): browser and production verification notes.
 - [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md): generated artwork prompts and provenance.
-- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): future email payload, inline artwork, and complete PDF attachment contract.
+- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): live email payload, inline artwork, and complete PDF attachment contract.
 - [`AGENTS.md`](AGENTS.md): repository-specific instructions for coding agents.
 
 ## What belongs in this README
@@ -151,8 +150,8 @@ Do not put private names, personal schedules, addresses, personal correspondence
 ## Publishing checklist
 
 1. Confirm that all public copy and assets are approved.
-2. Configure the secure email service separately from the browser application.
-3. Test short and very long postcard messages through the email and attachment path.
+2. Confirm the secure email service bindings are present in the production deployment.
+3. Test short and very long postcard messages through the live email and attachment path.
 4. Run `npm run build` and the documented browser checks.
 5. Deploy `dist/` to the chosen static host.
 6. Add and push the intended source files to the remote repository manually.

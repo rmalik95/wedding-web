@@ -5,6 +5,9 @@ export default function Envelope({ onOpen }: { onOpen: () => void }) {
   const [opening, setOpening] = useState(false);
   const [reduced, setReduced] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const finish = useRef(onOpen);
+
+  useEffect(() => { finish.current = onOpen; }, [onOpen]);
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -17,7 +20,7 @@ export default function Envelope({ onOpen }: { onOpen: () => void }) {
   function openLetter() {
     if (opening) return;
     setOpening(true);
-    timer.current = setTimeout(onOpen, reduced ? 850 : 5100);
+    timer.current = setTimeout(() => finish.current(), reduced ? 850 : 5100);
   }
 
   return (
