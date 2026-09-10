@@ -10,7 +10,7 @@ Email delivery is provided by the Cloudflare Pages Function at `functions/api/se
 4. Mail clients may clip very long HTML emails. The attached paginated PDF is the complete, portable postcard in those cases. There is no claim that every mail client can display arbitrarily long messages inline without clipping.
 5. The deployed Cloudflare Pages project provides the recipient, verified sender, and Resend API key as environment bindings. The endpoint handles validation and rate limiting. Handle transport size limits with an explicit error rather than silent truncation. Generate or validate attachments on the server and never trust client HTML.
 
-The form can send a postcard, preview it, or download it. The mail transport accepts only known destinations, validates the uploaded PDF, rate-limits requests, and reads Resend settings exclusively from Cloudflare Pages environment bindings. Configure `RESEND_API_KEY` as an encrypted secret, plus `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as production variables. Never place any of these values in browser code.
+The form can send a postcard, preview it, or download it. The mail transport accepts only known destinations, validates the uploaded PDF, rate-limits requests, and reads Resend settings exclusively from Cloudflare Pages environment bindings. Configure `RESEND_API_KEY` as an encrypted secret, plus `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as production variables. `WISHES_TO_EMAIL` accepts one or more comma-separated recipient addresses. Never place any of these values in browser code.
 
 ## PDF rendering
 

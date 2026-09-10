@@ -12,9 +12,15 @@ const destinations = new Set(['Newcastle', 'Davao', 'Tanzania', 'India', 'Hungar
 const MAX_NAME_LENGTH = 100;
 const MAX_MESSAGE_LENGTH = 12_000;
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
+const EMAIL_ADDRESS = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const imageFor = (destination: string) => `/images/postcard-${destination.toLowerCase().replaceAll(' ', '-')}-illustrated.webp`;
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
+
+function recipientEmails(value: string) {
+  const recipients = value.split(',').map((email) => email.trim()).filter(Boolean);
+  return recipients.length && recipients.every((email) => EMAIL_ADDRESS.test(email)) ? recipients : null;
+}
 
 function base64(bytes: Uint8Array) {
   let binary = '';
@@ -38,7 +44,8 @@ async function allowRequest(request: Request, destination: string, name: string,
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const origin = request.headers.get('Origin');
   if (origin && origin !== new URL(request.url).origin) return json({ error: 'Invalid request origin.' }, 403);
-  if (!env.RESEND_API_KEY || !env.WISHES_TO_EMAIL || !env.WISHES_FROM_EMAIL) return json({ error: 'Postcard delivery is not configured yet.' }, 503);
+  const recipients = recipientEmails(env.WISHES_TO_EMAIL || '');
+  if (!env.RESEND_API_KEY || !recipients || !env.WISHES_FROM_EMAIL) return json({ error: 'Postcard delivery is not configured yet.' }, 503);
 
   let form: FormData;
   try { form = await request.formData(); } catch { return json({ error: 'Please try sending the postcard again.' }, 400); }
@@ -64,7 +71,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: env.WISHES_FROM_EMAIL, to: [env.WISHES_TO_EMAIL], subject: email.subject, html: email.html, text: email.text, attachments: [
+    body: JSON.stringify({ from: env.WISHES_FROM_EMAIL, to: recipients, subject: email.subject, html: email.html, text: email.text, attachments: [
       { filename: `wedding-postcard-${destination.toLowerCase().replaceAll(' ', '-')}.pdf`, content: base64(pdfBytes), content_type: 'application/pdf' },
       { filename: `${destination.toLowerCase().replaceAll(' ', '-')}-postcard.webp`, content: base64(artworkBytes), content_type: 'image/webp', content_id: email.artworkContentId },
     ] }),
