@@ -1,4 +1,4 @@
-/** Shared by the future server-side email integration. Does not send mail. */
+/** Builds the styled HTML and plain-text alternatives for delivered postcards. */
 export type PostcardEmailInput = { destination: string; name: string; message: string };
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 

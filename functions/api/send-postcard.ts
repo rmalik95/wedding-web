@@ -12,7 +12,6 @@ const destinations = new Set(['Newcastle', 'Davao', 'Tanzania', 'India', 'Hungar
 const MAX_NAME_LENGTH = 100;
 const MAX_MESSAGE_LENGTH = 12_000;
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
-const artworkContentId = 'destination-artwork@wedding';
 
 const imageFor = (destination: string) => `/images/postcard-${destination.toLowerCase().replaceAll(' ', '-')}-illustrated.webp`;
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
@@ -66,8 +65,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from: env.WISHES_FROM_EMAIL, to: [env.WISHES_TO_EMAIL], subject: email.subject, html: email.html, text: email.text, attachments: [
-      { filename: `wedding-postcard-${destination.toLowerCase().replaceAll(' ', '-')}.pdf`, content: base64(pdfBytes), contentType: 'application/pdf' },
-      { filename: `${destination.toLowerCase().replaceAll(' ', '-')}-postcard.webp`, content: base64(artworkBytes), contentType: 'image/webp', contentId: artworkContentId },
+      { filename: `wedding-postcard-${destination.toLowerCase().replaceAll(' ', '-')}.pdf`, content: base64(pdfBytes), content_type: 'application/pdf' },
+      { filename: `${destination.toLowerCase().replaceAll(' ', '-')}-postcard.webp`, content: base64(artworkBytes), content_type: 'image/webp', content_id: email.artworkContentId },
     ] }),
   });
   if (!response.ok) { console.error('Resend rejected postcard delivery', response.status); return json({ error: 'We could not send your postcard just now. Please try again shortly.' }, 502); }
