@@ -281,13 +281,16 @@ export default function App() {
               rel="noreferrer"
               aria-label="Open our illustrated journey map in full size"
             >
-              <img
-                src="/images/journey.webp"
-                alt="Illustrated journey from Newcastle and Davao, through Tanzania, India, Hungary, London, Edinburgh, Portugal, Amsterdam and the proposal at Alnwick Castle, to our wedding in Hong Kong"
-                width="1130"
-                height="1394"
-                loading="lazy"
-              />
+              <picture>
+                <source media="(max-width: 600px)" srcSet="/images/journey-ink.webp" />
+                <img
+                  src="/images/journey.webp"
+                  alt="Illustrated journey from Newcastle and Davao, through Tanzania, India, Hungary, London, Edinburgh, Portugal, Amsterdam and the proposal at Alnwick Castle, to our wedding in Hong Kong"
+                  width="1130"
+                  height="1394"
+                  loading="lazy"
+                />
+              </picture>
             </a>
           </figure>
           <div className="destination-line">
