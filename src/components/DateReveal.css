@@ -1,3 +1,324 @@
-.date-reveal{padding:110px 24px 100px;text-align:center;color:#741b29;background:#f4efdf;position:relative}.date-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.23em;margin:0 0 25px}.date-reveal h2{font-family:var(--serif,Georgia,serif);font-size:clamp(42px,5.3vw,76px);font-weight:400;line-height:1.06;letter-spacing:-.045em;margin:0}.date-reveal h2 em{font-weight:400}.date-instruction{font-size:14px;line-height:1.7;margin:26px auto 40px;color:#785c53}.date-circles{display:flex;justify-content:center;gap:clamp(16px,4vw,60px);max-width:710px;margin:auto}.date-piece{width:clamp(82px,19vw,175px)}.date-circle{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;display:grid;place-items:center;border:1px solid #bd974c;background:#f8f3e7;box-shadow:inset 0 0 0 8px #f4efdf,inset 0 0 0 9px #d4be8e}.date-value{font-family:var(--serif,Georgia,serif);font-size:clamp(29px,5vw,54px);letter-spacing:-.035em}.date-circle canvas{position:absolute;width:100%;height:100%;inset:0;touch-action:none;cursor:crosshair;transition:opacity .65s ease}.date-circle.is-revealed canvas{opacity:0;pointer-events:none}.date-piece-button{background:none;border:0;color:#785c53;text-transform:uppercase;letter-spacing:.13em;font-size:10px;min-height:44px;cursor:pointer;margin-top:9px;padding:8px 2px}.date-piece-button:disabled{cursor:default;color:#741b29}.date-reveal-all{border:0;border-bottom:1px solid #a77f64;background:none;color:#741b29;padding:10px 0;font-family:inherit;font-size:13px;min-height:44px;margin-top:26px;cursor:pointer}.date-reveal-all span{margin-left:16px}.date-reveal button:focus-visible{outline:2px solid #741b29;outline-offset:5px}.date-announcement{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.date-countdown{margin:38px auto 0;animation:date-appear .8s ease both}.date-countdown-title{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,3vw,27px);font-style:italic;margin:0 0 25px}.date-countdown-values{display:flex;justify-content:center;gap:clamp(23px,5vw,62px)}.date-countdown-values>div{display:flex;flex-direction:column;min-width:42px}.date-countdown-values span{font-family:var(--serif,Georgia,serif);font-variant-numeric:tabular-nums;font-size:clamp(30px,4.3vw,48px);line-height:1.2}.date-countdown-values small{font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-top:8px}.date-time-note{font-size:11px;color:#785c53;letter-spacing:.06em;margin:28px 0 0}@keyframes date-appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(max-width:600px){.date-reveal{padding:76px 20px}.date-instruction{max-width:260px;font-size:13px}.date-piece{width:clamp(78px,25vw,125px)}.date-circles{gap:15px}.date-piece-button{font-size:9px;letter-spacing:.07em}}@media(prefers-reduced-motion:reduce){.date-circle canvas{transition:none}.date-countdown{animation:none}}
-.date-teacup-keepsake{width:185px;margin:30px auto 0}.date-teacup-keepsake img{width:100%;height:auto}
-.date-calendar-actions{display:flex;justify-content:center;gap:10px 18px;flex-wrap:wrap;margin:23px auto 0}.date-calendar-link{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:8px 0;border:0;border-bottom:1px solid #a77f64;background:transparent;color:#741b29;font:9px/1.4 inherit;letter-spacing:.045em;text-align:left;cursor:pointer}.calendar-app-icon{width:19px;height:19px;flex:none}.apple-calendar-icon{color:#741b29}.date-calendar-link:hover{color:#9b7137}.date-calendar-link:focus-visible{outline:2px solid #741b29;outline-offset:5px}
+.date-reveal {
+  position: relative;
+  display: block;
+  max-width: none;
+  padding: 76px max(6.5vw, 24px) 88px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  color: #741b29;
+  text-align: center;
+}
+
+.date-introduction,
+.date-details {
+  width: min(920px, 100%);
+  margin-inline: auto;
+}
+
+.date-details { min-width: 0; }
+
+.date-eyebrow {
+  margin: 0 0 25px;
+  font-size: 11px;
+  letter-spacing: .23em;
+  text-transform: uppercase;
+}
+
+h1.date-dedication {
+  margin: 0 0 30px;
+  font: clamp(38px, 4vw, 54px)/1.2 var(--serif);
+  letter-spacing: 0;
+}
+
+.date-dedication em { color: #96723e; }
+
+.date-reveal h2 {
+  margin: 0;
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(48px, 6.1vw, 84px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+
+.date-reveal h2 em { font-weight: 400; }
+
+.date-instruction {
+  max-width: 370px;
+  margin: 24px auto 32px;
+  color: #785c53;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.date-circles {
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 58px);
+  max-width: 710px;
+  margin: auto;
+}
+
+.date-piece { width: clamp(84px, 14vw, 145px); }
+
+.date-circle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 1;
+  border: 1px solid #bd974c;
+  border-radius: 50%;
+  background: #f8f3e7;
+  box-shadow: inset 0 0 0 8px #f4efdf, inset 0 0 0 9px #d4be8e;
+}
+
+.date-value {
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(29px, 5vw, 54px);
+  letter-spacing: -.035em;
+}
+
+.date-circle canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+  transition: opacity .65s ease;
+}
+
+.date-circle.is-revealed canvas {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.date-piece-button {
+  min-height: 44px;
+  margin-top: 9px;
+  padding: 8px 2px;
+  border: 0;
+  background: none;
+  color: #785c53;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.date-piece-button:disabled {
+  color: #741b29;
+  cursor: default;
+}
+
+.date-reveal-all {
+  min-height: 44px;
+  margin-top: 26px;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid #a77f64;
+  background: none;
+  color: #741b29;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.date-reveal-all span { margin-left: 16px; }
+
+.date-reveal button:focus-visible {
+  outline: 2px solid #741b29;
+  outline-offset: 5px;
+}
+
+.date-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.date-countdown {
+  position: relative;
+  width: 100%;
+  margin: 38px auto 0;
+  padding: 28px 0 10px;
+  border-top: 1px solid var(--rule);
+  animation: date-appear .8s ease both;
+}
+
+.date-countdown-content {
+  width: min(560px, 100%);
+  margin-inline: auto;
+}
+
+.date-countdown-title {
+  margin: 0 0 25px;
+  font-family: var(--serif, Georgia, serif);
+  font-size: 23px;
+  font-style: italic;
+}
+
+.date-countdown-values {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+}
+
+.date-countdown-values > div {
+  display: flex;
+  min-width: 42px;
+  flex-direction: column;
+}
+
+.date-countdown-values span {
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(30px, 4.3vw, 48px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.date-countdown-values small {
+  margin-top: 8px;
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.date-calendar-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px 18px;
+  flex-wrap: wrap;
+  margin: 23px auto 0;
+}
+
+.date-calendar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid #a77f64;
+  background: transparent;
+  color: #741b29;
+  cursor: pointer;
+  font: 10px/1.4 inherit;
+  letter-spacing: .045em;
+  text-align: left;
+}
+
+.date-calendar-link:hover { color: #9b7137; }
+
+.date-calendar-link:focus-visible {
+  outline: 2px solid #741b29;
+  outline-offset: 5px;
+}
+
+.calendar-app-icon {
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+.apple-calendar-icon { color: #741b29; }
+
+.date-teacup-keepsake {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  width: clamp(118px, 14vw, 145px);
+  margin: 0;
+  transform: rotate(2deg);
+}
+
+.date-teacup-keepsake img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes date-appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  .date-countdown-content {
+    width: min(430px, calc(100% - 220px));
+  }
+
+  .date-countdown-values { gap: 25px; }
+
+  .date-teacup-keepsake {
+    top: 76px;
+    width: 110px;
+  }
+}
+
+@media (max-width: 760px) {
+  .date-countdown {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .date-teacup-keepsake {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 125px;
+    margin: 25px auto 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .date-reveal { padding: 50px 20px 62px; }
+
+  .date-eyebrow {
+    margin-bottom: 22px;
+    font-size: 9px;
+  }
+
+  h1.date-dedication {
+    margin-bottom: 23px;
+    font-size: 36px;
+  }
+
+  .date-reveal h2 { font-size: 49px; }
+
+  .date-instruction { max-width: 280px; }
+
+  .date-circles { gap: 18px; }
+
+  .date-piece { width: 86px; }
+
+  .date-countdown { padding-top: 25px; }
+
+  .date-countdown-values { gap: clamp(15px, 6vw, 26px); }
+}
+
+@media (max-width: 390px) {
+  .date-reveal h2 { font-size: clamp(42px, 12.5vw, 49px); }
+
+  .date-circles { gap: 12px; }
+
+  .date-piece { width: min(25vw, 86px); }
+
+  .date-countdown-values { gap: 12px; }
+
+  .date-countdown-values > div { min-width: 40px; }
+
+  .date-countdown-values small {
+    font-size: 8px;
+    letter-spacing: .1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .date-circle canvas { transition: none; }
+  .date-countdown { animation: none; }
+}

@@ -98,6 +98,7 @@ function ScratchCircle({
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const previous = useRef<{ x: number; y: number } | null>(null);
+  const activePointer = useRef<number | null>(null);
   const strokes = useRef(0);
   useEffect(() => {
     const context = canvas.current?.getContext("2d");
@@ -120,7 +121,20 @@ function ScratchCircle({
     context.fillText("surprise", 150, 177);
   }, []);
   const scratch = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (revealed) return;
+    if (revealed || activePointer.current !== event.pointerId) return;
+
+    // A captured mouse pointer can continue dispatching move events after the
+    // button is released outside the canvas. Never treat those hover moves as
+    // scratching.
+    if (event.pointerType === "mouse" && (event.buttons & 1) === 0) {
+      activePointer.current = null;
+      previous.current = null;
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+      return;
+    }
+
     const element = canvas.current;
     const context = element?.getContext("2d", { willReadFrequently: true });
     if (!element || !context) return;
@@ -156,6 +170,14 @@ function ScratchCircle({
       if (clear / total > 0.38) onReveal();
     }
   };
+  const stopScratching = (event: React.PointerEvent<HTMLCanvasElement>) => {
+    if (activePointer.current !== event.pointerId) return;
+    activePointer.current = null;
+    previous.current = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
   return (
     <div className="date-piece">
       <div className={`date-circle${revealed ? " is-revealed" : ""}`}>
@@ -168,16 +190,24 @@ function ScratchCircle({
           height={300}
           aria-hidden="true"
           onPointerDown={(event) => {
-            if (revealed) return;
+            if (
+              revealed ||
+              activePointer.current !== null ||
+              !event.isPrimary ||
+              (event.pointerType === "mouse" && event.button !== 0)
+            )
+              return;
+            activePointer.current = event.pointerId;
             event.currentTarget.setPointerCapture(event.pointerId);
             previous.current = null;
             scratch(event);
           }}
           onPointerMove={scratch}
-          onPointerUp={() => {
-            previous.current = null;
-          }}
-          onPointerCancel={() => {
+          onPointerUp={stopScratching}
+          onPointerCancel={stopScratching}
+          onLostPointerCapture={(event) => {
+            if (activePointer.current !== event.pointerId) return;
+            activePointer.current = null;
             previous.current = null;
           }}
         />
@@ -223,7 +253,11 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
   ];
   return (
     <section className="date-reveal" id="date" aria-labelledby="date-heading">
-      <p className="date-eyebrow">A date to keep</p>
+      <header className="date-introduction">
+      <p className="date-eyebrow">Letter one · The date</p>
+      <h1 className="date-dedication">Rishabh <em>&</em> Glyra</h1>
+      </header>
+      <div className="date-details">
       <h2 id="date-heading">
         Some things are worth
         <br />
@@ -260,69 +294,71 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
       </div>
       {allRevealed && (
         <div className="date-countdown">
-          <p className="date-countdown-title">
-            {onWeddingDay
-              ? "Today is our forever."
-              : now > WEDDING
-                ? "Our forever has begun."
-                : "Counting the moments until we say “I do” in Hong Kong."}
-          </p>
-          {now < WEDDING && (
+          <div className="date-countdown-content">
+            <p className="date-countdown-title">
+              {onWeddingDay
+                ? "Today is our forever."
+                : now > WEDDING
+                  ? "Our forever has begun."
+                  : "Counting the moments until we say “I do” in Hong Kong."}
+            </p>
+            {now < WEDDING && (
+              <div
+                className="date-countdown-values"
+                role="timer"
+                aria-label="Time until our wedding"
+              >
+                {countdown.map((value, index) => (
+                  <div key={index}>
+                    <span>{String(value).padStart(2, "0")}</span>
+                    <small>
+                      {["days", "hours", "minutes", "seconds"][index]}
+                    </small>
+                  </div>
+                ))}
+              </div>
+            )}
             <div
-              className="date-countdown-values"
-              role="timer"
-              aria-label="Time until our wedding"
+              className="date-calendar-actions"
+              aria-label="Save the wedding date"
             >
-              {countdown.map((value, index) => (
-                <div key={index}>
-                  <span>{String(value).padStart(2, "0")}</span>
-                  <small>
-                    {["days", "hours", "minutes", "seconds"][index]}
-                  </small>
-                </div>
-              ))}
+              <a
+                className="date-calendar-link"
+                href={wedding.googleCalendarUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Save the date in Google Calendar"
+              >
+                <CalendarAppIcon app="google" />
+                <span>Google Calendar</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <button
+                type="button"
+                className="date-calendar-link"
+                onClick={onCalendar}
+                aria-label="Download the date for Apple Calendar"
+              >
+                <CalendarAppIcon app="apple" />
+                <span>Apple Calendar</span>
+                <span aria-hidden="true">↓</span>
+              </button>
+              <button
+                type="button"
+                className="date-calendar-link"
+                onClick={onCalendar}
+                aria-label="Download the date for Outlook"
+              >
+                <CalendarAppIcon app="outlook" />
+                <span>Outlook</span>
+                <span aria-hidden="true">↓</span>
+              </button>
             </div>
-          )}
-          <div
-            className="date-calendar-actions"
-            aria-label="Save the wedding date"
-          >
-            <a
-              className="date-calendar-link"
-              href={wedding.googleCalendarUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Save the date in Google Calendar"
-            >
-              <CalendarAppIcon app="google" />
-              <span>Google Calendar</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-            <button
-              type="button"
-              className="date-calendar-link"
-              onClick={onCalendar}
-              aria-label="Download the date for Apple Calendar"
-            >
-              <CalendarAppIcon app="apple" />
-              <span>Apple Calendar</span>
-              <span aria-hidden="true">↓</span>
-            </button>
-            <button
-              type="button"
-              className="date-calendar-link"
-              onClick={onCalendar}
-              aria-label="Download the date for Outlook"
-            >
-              <CalendarAppIcon app="outlook" />
-              <span>Outlook</span>
-              <span aria-hidden="true">↓</span>
-            </button>
           </div>
           <figure className="date-teacup-keepsake">
             <img
               src="/images/teacup-transparent.png"
-              alt="Illustration of a bride and groom sitting together in a teacup"
+              alt="Illustration of Rishabh and Glyra sitting together in a teacup"
               width="627"
               height="627"
               loading="lazy"
@@ -330,6 +366,7 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
           </figure>
         </div>
       )}
+      </div>
     </section>
   );
 }

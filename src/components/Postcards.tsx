@@ -154,7 +154,7 @@ export default function Postcards() {
       setStatus('Sending your postcard…');
       const response = await fetch('/api/send-postcard', { method: 'POST', body: data, credentials: 'same-origin' });
       const result: unknown = await response.json().catch(() => null);
-      if (!response.ok) throw new Error(typeof result === 'object' && result && 'error' in result && typeof result.error === 'string' ? result.error : 'Please try again shortly.');
+      if (!response.ok || typeof result !== 'object' || result === null || !('ok' in result) || result.ok !== true) throw new Error(typeof result === 'object' && result && 'error' in result && typeof result.error === 'string' ? result.error : 'Delivery could not be confirmed. Please try again shortly.');
       try { localStorage.setItem(draftKey, JSON.stringify({ name, message, destination: selected })); setSavedContent(JSON.stringify({ name, message })); } catch { /* Sending does not depend on browser storage. */ }
       setStatus('Your postcard has been sent to Rishabh & Glyra. Thank you.');
     } catch (error) {
@@ -177,7 +177,7 @@ export default function Postcards() {
   return (
     <section className="postcards-section reveal" id="wishes" aria-labelledby="postcards-title">
       <div className="postcards-heading">
-        <div><p className="postcards-eyebrow">A little love, by post</p><h2 id="postcards-title">Wish you were here.<br /><em>Glad you are.</em></h2></div>
+        <div><p className="postcards-eyebrow">Letter four · A little love, by post</p><h2 id="postcards-title">Wish you were here.<br /><em>Glad you are.</em></h2></div>
         <p>Every place holds a little piece of our story. Pick a postcard from our journey and leave a few words for the next chapter.</p>
       </div>
       <div className="postcards-track" ref={track} onScroll={() => {

@@ -1,12 +1,12 @@
 # Interactive Wedding Invitation Website
 
-This repository contains a responsive, single-page invitation website built with React, TypeScript, Vite, native CSS, and jsPDF. It presents an editorial correspondence experience with an animated envelope opening, date reveal, countdown, photo carousel, story section, illustrated map, destination postcard gallery, and long-form postcard composer.
+This repository contains a responsive, single-page invitation website built with React, TypeScript, Vite, native CSS, and jsPDF. It presents an editorial correspondence experience with a handcrafted paper-theatre opening, date reveal, countdown, photo carousel, story section, illustrated map, destination postcard gallery, and long-form postcard composer.
 
 The interface uses one cohesive visual system with warm paper tones, deep red, antique gold, serif typography, printed rules, tactile composition, and restrained motion. It is designed for desktop, tablet, and mobile browsers. There is no RSVP flow.
 
 ## Features
 
-- Animated envelope, candle, thread, wax seal, flap, and emerging invitation pieces.
+- A handcrafted oxblood-and-ivory paper theatre with a Hong Kong harbour scene and an accessible `Enter our story` transition.
 - Keyboard-accessible skip action and `prefers-reduced-motion` support.
 - Scratch-to-reveal date interaction with accessible reveal buttons.
 - Timezone-aware live countdown with wedding-day and post-event states.
@@ -22,7 +22,7 @@ The interface uses one cohesive visual system with warm paper tones, deep red, a
 
 ## Current integration status
 
-Postcard delivery is live through the Cloudflare Pages endpoint. A successful submission delivers the styled email body and complete postcard PDF to the configured recipient. Guests can also save a local draft, preview the PDF, or download it.
+Postcard delivery is implemented through the Cloudflare Pages endpoint and Resend. The user confirms delivery is complete. Successful submissions send the styled email body and complete postcard PDF to the configured recipients. Guests can also save a local draft, preview the PDF, or download it. The local Vite preview does not run the Cloudflare Pages endpoint; sending requires the configured Pages environment.
 
 The implementation contract is documented in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). The HTML builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts), and the PDF generator is [`src/components/postcardExport.ts`](src/components/postcardExport.ts). Credentials remain only in Cloudflare Pages environment bindings.
 
@@ -76,7 +76,7 @@ src/
   App.tsx                         Main page composition
   main.tsx                        React entry point
   styles.css                      Shared design tokens and responsive layout
-  components/Envelope.tsx         Opening animation
+  components/OpeningBook.tsx      Handcrafted paper-theatre opening
   components/DateReveal.tsx       Scratch surfaces and countdown
   components/PhotoCarousel.tsx    Accessible photo carousel
   components/Postcards.tsx        Gallery and wish composer
@@ -155,3 +155,14 @@ Do not put private names, personal schedules, addresses, personal correspondence
 4. Run `npm run build` and the documented browser checks.
 5. Deploy `dist/` to the chosen static host.
 6. Add and push the intended source files to the remote repository manually.
+
+## Editorial redesign preview
+The page order is handcrafted paper-theatre opening, date reveal, celebrations without a separate invitation hero, original story map and photographic interlude, postcards, then a compact illustrated closing. No commit or deployment is part of this preview.
+
+Photo TODO: add the remaining 4–5 approved photographs as optimized WebP files in `public/images`, then append their source, accurate alt text and approved caption to the `photos` array in `src/components/PhotoCarousel.tsx`. Numbering and navigation update automatically. The preview uses three original photos without duplicates or placeholders.
+
+The original teacup appears with the revealed countdown, and the original couple remains in the closing. Existing original source assets remain untouched.
+
+The supplied black-and-white woodland source is preserved and is displayed only as the first-screen physical photo print. It is not repeated on the scratch-date page.
+
+The opening artwork uses bespoke generated paper-theatre still lifes with separate desktop and mobile compositions. Its design constraints and provenance are recorded in [`docs/OPENING-ARTWORK.md`](docs/OPENING-ARTWORK.md). The first screen contains no wedding date or venue details.

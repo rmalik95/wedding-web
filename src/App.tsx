@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Envelope from "./components/Envelope";
+import OpeningBook from "./components/OpeningBook";
 import DateReveal from "./components/DateReveal";
 import PhotoCarousel from "./components/PhotoCarousel";
 import Postcards from "./components/Postcards";
@@ -17,22 +17,6 @@ const stops = [
   "Alnwick Castle",
   "Hong Kong",
 ];
-function Botanical() {
-  return (
-    <svg
-      className="botanical"
-      viewBox="0 0 140 250"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M70 243C90 170 48 98 83 12M76 199C30 177 21 145 27 126C58 130 76 155 76 199ZM77 166C110 152 127 125 120 104C95 107 81 130 77 166ZM72 128C40 104 37 83 43 67C69 77 71 99 72 128ZM75 80C103 71 111 46 109 33C86 37 77 56 75 80ZM79 42C64 23 67 13 76 6C87 18 88 25 79 42Z"
-        stroke="currentColor"
-        strokeWidth="1.2"
-      />
-    </svg>
-  );
-}
 function icsText(value: string) {
   return value
     .replace(/\\/g, "\\\\")
@@ -92,21 +76,21 @@ export default function App() {
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, [opened]);
-  if (!opened)
-    return (
-      <Envelope
-        onOpen={() => {
-          setOpened(true);
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
   return (
     <>
+      {!opened && (
+        <OpeningBook
+          onOpen={() => {
+            setOpened(true);
+            window.scrollTo(0, 0);
+          }}
+        />
+      )}
+      {opened && <>
       <a className="skip-link" href="#main">
         Skip to invitation
       </a>
-      <header className="site-header">
+      <header className="site-header invitation-shell invitation-shell--ready">
         <a
           className="monogram"
           href="#main"
@@ -115,92 +99,20 @@ export default function App() {
           R<span>&</span>G
         </a>
         <nav aria-label="Invitation">
-          <a href="#celebrations">The celebrations</a>
+          <a href="#date">The date</a><a href="#celebrations">The celebrations</a>
           <a href="#story">Our story</a>
           <a href="#wishes">
             Send a little love <span aria-hidden="true">↗</span>
           </a>
         </nav>
       </header>
-      <main id="main" ref={main} tabIndex={-1}>
-        <section className="hero section-pad">
-          <div className="hero-letter">
-            <span className="eyebrow">A love letter, to you</span>
-            <div className="little-flower" aria-hidden="true">
-              ✳
-            </div>
-            <p className="hero-prelude">Together with our families</p>
-            <h1>
-              Rishabh <span className="ampersand">&</span>
-              <br />
-              <em>Glyra</em>
-            </h1>
-            <p className="hero-note">
-              A thousand miles. A hundred goodbyes.
-              <br />
-              And now, a lifetime of hellos.
-            </p>
-            <a className="text-link" href="#date">
-              Our forever starts here <span>↓</span>
-            </a>
-          </div>
-          <div className="hero-art">
-            <div className="letter-behind">
-              <span>WITH LOVE, ALWAYS</span>
-              <p>
-                Officially
-                <br />
-                <em>boarding forever.</em>
-              </p>
-            </div>
-            <figure className="hero-photo">
-              <img
-                src="/images/embrace.webp"
-                alt="Rishabh and Glyra embracing on a balcony"
-                width="1200"
-                height="1200"
-                fetchPriority="high"
-              />
-              <figcaption>you, me & everywhere in between</figcaption>
-            </figure>
-            <div className="hero-stamp" aria-hidden="true">
-              <span>FIRST CLASS</span>
-              <b>
-                LOVE
-                <br />
-                MAIL
-              </b>
-              <span>DELIVERED WITH CARE</span>
-            </div>
-            <div className="ribbon" aria-hidden="true" />
-            <Botanical />
-          </div>
-          <div className="hero-bottom">
-            <span>A NEW CHAPTER, ADDRESSED TO FOREVER</span>
-            <span>SCROLL TO UNFOLD ↓</span>
-          </div>
-        </section>
-        <section className="welcome section-pad reveal">
-          <span className="eyebrow">Dear family & friends,</span>
-          <h2>
-            Some stories are written in ink.
-            <br />
-            Ours was written in <em>air miles.</em>
-          </h2>
-          <p>
-            After years of long distance, countless flights, and more paperwork
-            than we’d ever imagined, we’re finally getting married. And we
-            couldn’t turn this page without you.
-          </p>
-          <span className="handwritten">
-            With all our love, Rishabh & Glyra
-          </span>
-        </section>
+      <main id="main" ref={main} tabIndex={-1} className="invitation-shell invitation-shell--ready">
         <DateReveal onCalendar={calendar} />
-        <PhotoCarousel />
         <section id="celebrations" className="celebrations section-pad reveal">
+          <div className="arrival-mark"><span>WITH LOVE, TO</span><strong>HONG KONG</strong><span>21 OCT 2026 · 10:30 AM</span></div>
+          <div className="celebration-intro">
           <div className="section-heading">
-            <span className="eyebrow">03 / The celebrations</span>
+            <span className="eyebrow">Letter two · The celebrations</span>
             <h2>
               Two cities.
               <br />
@@ -211,6 +123,7 @@ export default function App() {
               <br />
               Then, a little ceremony and a very big forever.
             </p>
+          </div>
           </div>
           <div className="event-grid">
             <article className="event">
@@ -248,7 +161,7 @@ export default function App() {
         </section>
         <section id="story" className="story section-pad reveal">
           <div className="story-copy">
-            <span className="eyebrow">04 / Our story, our map</span>
+            <span className="eyebrow">Letter three · Our story</span>
             <h2>
               Different places.
               <br />
@@ -302,9 +215,10 @@ export default function App() {
             ))}
           </div>
         </section>
+        <PhotoCarousel />
         <Postcards />
         <footer className="footer reveal">
-          <span className="eyebrow">Our next destination</span>
+          <span className="eyebrow">Final delivery · Forever</span>
           <h2>
             Forever, <em>with you.</em>
           </h2>
@@ -325,6 +239,7 @@ export default function App() {
           <span className="footer-small">SEALED WITH LOVE. SENT WITH JOY.</span>
         </footer>
       </main>
+      </>}
     </>
   );
 }
