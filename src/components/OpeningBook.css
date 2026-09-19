@@ -127,7 +127,14 @@
   .opening-theatre__enter { bottom: max(7.5vh, 67px); min-width: min(74vw, 290px); min-height: 50px; font-size: 10px; }
 }
 @media (max-width: 700px) and (orientation: portrait) {
-  .opening-theatre__title { top: auto; bottom: clamp(148px, 18svh, 178px); width: min(76vw, 315px); text-shadow: 0 1px #fff8e4b8; }
+  /* Keep the copy in the artwork's lower paper panel, with its position tied
+     to the CTA instead of a device-specific pixel offset. */
+  .opening-theatre__title {
+    top: auto;
+    bottom: calc(max(7.5vh, 67px) + clamp(38px, 6svh, 56px));
+    width: min(76vw, 315px);
+    text-shadow: 0 1px #fff8e4b8;
+  }
   .opening-theatre__title p { font-size: 8px; letter-spacing: .16em; }
   .opening-theatre__title h1 { font-size: clamp(46px, 13vw, 54px); margin: 5px 0 4px; }
   .opening-theatre__title .opening-theatre__names { font-size: 11px; }
