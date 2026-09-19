@@ -59,7 +59,7 @@ export default function OpeningBook({ onOpen }: OpeningBookProps) {
     >
       <picture className="opening-theatre__art" aria-hidden="true">
         <source
-          media="(max-width: 700px) and (orientation: portrait)"
+          media="(max-width: 1100px) and (orientation: portrait)"
           srcSet="/images/opening-paper-theatre-mobile.webp"
         />
         <img
@@ -76,7 +76,6 @@ export default function OpeningBook({ onOpen }: OpeningBookProps) {
         <p>An invitation has arrived for you</p>
         <h1 id="opening-title">R <i>&amp;</i> G</h1>
         <span aria-hidden="true" />
-        <p className="opening-theatre__names">Glyra &amp; Rishabh</p>
       </div>
 
       <button

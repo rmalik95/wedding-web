@@ -69,8 +69,8 @@
 .opening-theatre__title h1 {
   margin: clamp(7px, 1.3vw, 17px) 0 clamp(5px, .8vw, 11px);
   color: #651826;
-  font: 400 clamp(42px, 5.4vw, 88px)/.86 var(--serif, Georgia, serif);
-  letter-spacing: .035em;
+  font: italic 400 clamp(42px, 5.4vw, 88px)/.86 var(--serif, Georgia, serif);
+  letter-spacing: .07em;
   text-shadow: 0 1px #fff8e4b8, 0 0 13px #fff8e46b;
 }
 .opening-theatre__title h1 i { font-size: .58em; font-style: italic; font-weight: 400; }
@@ -80,12 +80,6 @@
   height: 1px;
   margin: 0 auto 8px;
   background: linear-gradient(90deg, transparent, #741b29 16% 84%, transparent);
-}
-.opening-theatre__title .opening-theatre__names {
-  color: #651826;
-  font: italic clamp(11px, 1vw, 16px)/1.2 var(--serif, Georgia, serif);
-  letter-spacing: .055em;
-  text-transform: none;
 }
 .opening-theatre__enter {
   position: absolute;
@@ -131,13 +125,32 @@
      to the CTA instead of a device-specific pixel offset. */
   .opening-theatre__title {
     top: auto;
-    bottom: calc(max(7.5vh, 67px) + clamp(38px, 6svh, 56px));
+    bottom: calc(max(7.5vh, 67px) + clamp(58px, 8svh, 76px));
     width: min(76vw, 315px);
     text-shadow: 0 1px #fff8e4b8;
   }
   .opening-theatre__title p { font-size: 8px; letter-spacing: .16em; }
   .opening-theatre__title h1 { font-size: clamp(46px, 13vw, 54px); margin: 5px 0 4px; }
-  .opening-theatre__title .opening-theatre__names { font-size: 11px; }
+}
+@media (min-width: 701px) and (max-width: 1100px) and (orientation: portrait) {
+  .opening-theatre__art { background: #d0aa7e; }
+  .opening-theatre__art::before {
+    position: absolute;
+    inset: -24px;
+    background: url('/images/opening-paper-theatre-mobile.webp') center / cover no-repeat;
+    content: "";
+    filter: blur(18px) saturate(.88);
+    opacity: .72;
+    transform: scale(1.04);
+  }
+  .opening-theatre__art img { object-fit: contain; }
+  .opening-theatre__title {
+    top: auto;
+    bottom: calc(clamp(9.5vh, 14.4vw, 20vh) + clamp(58px, 8svh, 86px));
+    width: min(60vw, 420px);
+  }
+  .opening-theatre__title p { font-size: clamp(9px, 1.2vw, 12px); }
+  .opening-theatre__title h1 { font-size: clamp(54px, 7vw, 76px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .opening-theatre,.opening-theatre *,.opening-theatre *::before,.opening-theatre *::after { transition-duration: .15s !important; transition-delay: 0s !important; }
