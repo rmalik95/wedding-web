@@ -304,22 +304,20 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
                   ? "Our forever has begun."
                   : "Counting the moments until we say “I do” in Hong Kong."}
             </p>
-            {now < WEDDING && (
-              <div
-                className="date-countdown-values"
-                role="timer"
-                aria-label="Time until our wedding"
-              >
-                {countdown.map((value, index) => (
-                  <div key={index}>
-                    <span>{String(value).padStart(2, "0")}</span>
-                    <small>
-                      {["days", "hours", "minutes", "seconds"][index]}
-                    </small>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              className="date-countdown-values"
+              role="timer"
+              aria-label="Time until our wedding in Hong Kong time"
+            >
+              {countdown.map((value, index) => (
+                <div key={index}>
+                  <span>{String(value).padStart(2, "0")}</span>
+                  <small>
+                    {["days", "hours", "minutes", "seconds"][index]}
+                  </small>
+                </div>
+              ))}
+            </div>
             <div
               className="date-calendar-actions"
               aria-label="Save the wedding date"
