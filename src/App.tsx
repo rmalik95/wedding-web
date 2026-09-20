@@ -177,7 +177,7 @@ export default function App() {
                     loading="lazy"
                   />
                 </figure>
-                <p className="event-footer">Officially boarding forever.</p>
+                <p className="event-footer">Officially boarding forever!</p>
                 <button className="text-link event-calendar" onClick={calendar}>
                   Add the wedding to your calendar <span>↗</span>
                 </button>

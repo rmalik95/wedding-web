@@ -167,7 +167,9 @@ function ScratchCircle({
           total++;
           if (pixels[(y * 300 + x) * 4 + 3] < 100) clear++;
         }
-      if (clear / total > 0.38) onReveal();
+      // Reveal the date once it is readable, rather than making guests clear
+      // most of the circle before the countdown can appear.
+      if (clear / total > 0.2) onReveal();
     }
   };
   const stopScratching = (event: React.PointerEvent<HTMLCanvasElement>) => {
