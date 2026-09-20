@@ -20,15 +20,19 @@ export default function OpeningBook({ onOpen }: OpeningBookProps) {
     const previousRootOverflow = root.style.overflow;
     const previousBodyOverflow = body.style.overflow;
     const previousOverscroll = body.style.overscrollBehavior;
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const previousTheme = themeMeta?.getAttribute("content");
 
     root.style.overflow = "hidden";
     body.style.overflow = "hidden";
     body.style.overscrollBehavior = "none";
+    themeMeta?.setAttribute("content", "#d0aa7e");
 
     return () => {
       root.style.overflow = previousRootOverflow;
       body.style.overflow = previousBodyOverflow;
       body.style.overscrollBehavior = previousOverscroll;
+      if (themeMeta && previousTheme) themeMeta.setAttribute("content", previousTheme);
     };
   }, []);
 
