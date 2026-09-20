@@ -1,168 +1,85 @@
-# Interactive Wedding Invitation Website
+# Rishabh & Glyra Wedding Invitation
 
-This repository contains a responsive, single-page invitation website built with React, TypeScript, Vite, native CSS, and jsPDF. It presents an editorial correspondence experience with a handcrafted paper-theatre opening, date reveal, countdown, photo carousel, story section, illustrated map, destination postcard gallery, and long-form postcard composer.
+<p align="center">
+  <img src="public/images/rishabh-glyra-logo.png" alt="Rishabh and Glyra" width="180" />
+</p>
 
-The interface uses one cohesive visual system with warm paper tones, deep red, antique gold, serif typography, printed rules, tactile composition, and restrained motion. It is designed for desktop, tablet, and mobile browsers. There is no RSVP flow.
+An editorial, single-page wedding invitation built with React, TypeScript, Vite, native CSS, and jsPDF. The experience moves from a handcrafted paper-theatre opening through the date reveal, celebrations, story, photography, destination postcards, and illustrated closing.
 
-## Features
+**Topics:** `react` `typescript` `vite` `wedding-website` `editorial-design` `accessible-ui` `jspdf`
 
-- A handcrafted oxblood-and-ivory paper theatre with a Hong Kong harbour scene and an accessible `Enter our story` transition.
-- Keyboard-accessible skip action and `prefers-reduced-motion` support.
-- Scratch-to-reveal date interaction with accessible reveal buttons.
-- Timezone-aware live countdown with wedding-day and post-event states.
-- Post-reveal Google Calendar save-the-date link and downloadable `.ics` event for Apple Calendar, Outlook, and compatible apps.
-- Controllable photo carousel with previous, next, pause, play, keyboard, and touch support.
-- Responsive editorial event, story, and illustrated map sections.
-- Responsive destination postcard wall on desktop and tablet, with a swipeable mobile gallery and accessible dialog-based wish composer.
-- Local draft storage as a pdf.
-- Designed postcard PDF preview and download with continuation pages for long messages.
-- Cloudflare Pages and Resend delivery for complete postcard PDFs. Configure `RESEND_API_KEY` as a Cloudflare encrypted secret and set `WISHES_TO_EMAIL` and `WISHES_FROM_EMAIL` as Pages variables before deploying. `WISHES_TO_EMAIL` accepts a comma-separated recipient list.
-- Reusable styled HTML email builder and PDF export API used by the live delivery endpoint.
-- No analytics, autoplay audio, payment flow, guest tracking, or public email service is included.
+## Current experience
 
-## Current integration status
+- Oxblood, ivory, and antique-gold correspondence design with responsive desktop, tablet, and mobile layouts.
+- Accessible paper-theatre opening with keyboard support, skip navigation, touch support, and reduced-motion behavior.
+- Three round scratch reveals for 21 October 2026, with accessible reveal buttons and a Hong Kong timezone-aware countdown.
+- Celebration details for the Davao send-off and Hong Kong wedding, with Google Calendar and `.ics` downloads.
+- Controllable ten-image film carousel with previous, next, pause, keyboard, touch, and reduced-motion support.
+- Original journey map and a postcard gallery for eleven destinations.
+- Postcard composer with local drafts, complete paginated PDF previews/downloads, and styled email delivery through Cloudflare Pages and Resend.
+- No RSVP, analytics, autoplay audio, payment flow, guest tracking, or fabricated venue information.
 
-Postcard delivery is implemented through the Cloudflare Pages endpoint and Resend. The user confirms delivery is complete. Successful submissions send the styled email body and complete postcard PDF to the configured recipients. Guests can also save a local draft, preview the PDF, or download it. The local Vite preview does not run the Cloudflare Pages endpoint; sending requires the configured Pages environment.
+## Run locally
 
-The implementation contract is documented in [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md). The HTML builder is [`src/lib/postcardEmail.ts`](src/lib/postcardEmail.ts), and the PDF generator is [`src/components/postcardExport.ts`](src/components/postcardExport.ts). Credentials remain only in Cloudflare Pages environment bindings.
-
-## Requirements
-
-Use Node.js 20.19 or newer, or Node.js 22.12 or newer.
-
-## Development
-
-Install dependencies:
+Requires Node.js 20.19+ or 22.12+.
 
 ```sh
 npm install
-```
-
-Start the development server:
-
-```sh
 npm run dev
 ```
 
-Vite prints the local URL. The default is `http://localhost:5173` when that port is available.
-
-Create a production build:
+Useful commands:
 
 ```sh
-npm run build
+npm run build    # TypeScript check and production build
+npm run preview  # Preview dist locally
 ```
 
-Preview the production build:
+The production output is generated in `dist/`. Runtime website assets live in `public/`; `dist/` should not be edited manually.
 
-```sh
-npm run preview
-```
+## Email delivery
 
-The deployable output is written to `dist/`. No hosting or GitHub push is performed by the repository scripts.
+Postcard delivery is implemented through the Cloudflare Pages endpoint and Resend. Configure these in the Pages environment, never in browser code:
 
-## Commands
+- `RESEND_API_KEY` as an encrypted secret
+- `WISHES_TO_EMAIL`
+- `WISHES_FROM_EMAIL`
 
-| Command | Purpose |
-| --- | --- |
-| `npm install` | Install project dependencies |
-| `npm run dev` | Start the Vite development server |
-| `npm run build` | Run TypeScript checking and create the production build |
-| `npm run preview` | Serve the production build locally |
+The endpoint sends the styled HTML email and the complete postcard PDF attachment. Local Vite preview does not provide the Cloudflare Pages endpoint.
 
 ## Project structure
 
 ```text
-src/
-  App.tsx                         Main page composition
-  main.tsx                        React entry point
-  styles.css                      Shared design tokens and responsive layout
-  components/OpeningBook.tsx      Handcrafted paper-theatre opening
-  components/DateReveal.tsx       Scratch surfaces and countdown
-  components/PhotoCarousel.tsx    Accessible photo carousel
-  components/Postcards.tsx        Gallery and wish composer
-  components/postcardExport.ts    Paginated postcard PDF generator
-  lib/postcardEmail.ts            Escaped styled email body builder
-public/images/                    Optimized website image assets
-public/fonts/                     Local font files and license texts
-docs/                             Requirements, QA, art, and email specifications
-AGENTS.md                         Repository instructions for coding agents
-index.html                        Document metadata and React mount point
-package.json                      Scripts and dependencies
-package-lock.json                 Locked dependency versions
-tsconfig.json                     TypeScript configuration
+src/App.tsx                       Main page composition
+src/components/OpeningBook.tsx   Paper-theatre opening
+src/components/DateReveal.tsx    Scratch date and countdown
+src/components/PhotoCarousel.tsx Film carousel
+src/components/Postcards.tsx     Gallery and wish composer
+src/components/postcardExport.ts Paginated postcard PDF generation
+src/lib/postcardEmail.ts          Styled email builder
+public/images/                    Optimized website images
+public/fonts/                     Local fonts and licenses
+docs/                             PRD, QA, artwork, and email documentation
 ```
 
-## Assets
+## Design and implementation notes
 
-Website-ready image derivatives live under `public/images/`. The postcard gallery uses the `postcard-*-illustrated.webp` files, the countdown keepsake uses the transparent `teacup-transparent.png` derivative, and the closing illustration uses the background-removed `couple-cutout.png` derivative. The source photographs, design source files, PDFs, local QA screenshots, environment files, and agent handoff files are excluded by `.gitignore`.
+- Uses semantic HTML, native controls, visible focus states, descriptive alternative text, live status messages, and keyboard-accessible alternatives.
+- Honors `prefers-reduced-motion` and uses responsive layouts tested at 375, 768, and 1440 pixels.
+- Original source photographs remain preserved; optimized WebP derivatives are used by the carousel.
+- Postcard artwork is stored as `postcard-*-illustrated.webp`. The original map remains in the story section.
+- The countdown uses `teacup-transparent.png`, and the closing uses `couple-cutout.png`.
 
-Images have explicit dimensions, deliberate crops, descriptive alternative text, and lazy loading where appropriate. Fonts are stored locally with their license files. No third-party image URLs are required at runtime.
+## Documentation
 
-## Technical and design notes
+- [`docs/PRD.md`](docs/PRD.md): approved scope and acceptance criteria
+- [`docs/QA.md`](docs/QA.md): verification notes
+- [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md): postcard artwork provenance
+- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): email and PDF attachment contract
+- [`docs/OPENING-ARTWORK.md`](docs/OPENING-ARTWORK.md): opening artwork provenance
 
-- React, TypeScript, Vite, native CSS, and jsPDF are used without an animation framework.
-- CSS variables keep colors, typography, spacing, and component states coherent.
-- Motion uses compositor-friendly transforms and opacity, and is disabled or reduced when requested by the operating system.
-- Native controls, labels, visible focus states, keyboard alternatives, pointer input, touch alternatives, modal behavior, and live status messages support accessible interaction.
-- Layout is checked at 375, 768, and 1440 pixel widths with no horizontal overflow.
-- The PDF renderer wraps long text, including long unbroken tokens, and creates continuation pages instead of truncating content. PDF pages are raster artwork, so their text is not selectable.
-- The HTML email builder escapes user content and is intended for server-side use only.
+## GitHub tags
 
-## Verification
+The `Topics` line above gives the project keywords in the README. GitHub repository topics are separate from README content: open the repository page, choose **About → gear icon**, add topics under **Topics**, and save. The same topics can also be managed with GitHub CLI or the repository API.
 
-Verification notes are maintained in [`docs/QA.md`](docs/QA.md). The checks cover:
-
-- TypeScript and Vite production builds;
-- desktop, tablet, and mobile layout and overflow;
-- opening animation and reduced-motion behavior;
-- scratch interaction and countdown states;
-- carousel controls and pause behavior;
-- all postcard destinations and dialog behavior;
-- empty-form validation, local drafts, PDF preview, and PDF download;
-- long-message preservation across continuation pages;
-- keyboard focus containment, Escape close, and focus restoration; and
-- browser runtime errors in exercised flows.
-
-Run `npm run build` before publishing. Browser checks use the local production preview and an installed Chromium runtime.
-
-## Documentation map
-
-- [`docs/PRD.md`](docs/PRD.md): product scope, interaction requirements, design direction, and acceptance criteria.
-- [`docs/QA.md`](docs/QA.md): browser and production verification notes.
-- [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md): generated artwork prompts and provenance.
-- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): live email payload, inline artwork, and complete PDF attachment contract.
-- [`AGENTS.md`](AGENTS.md): repository-specific instructions for coding agents.
-
-## What belongs in this README
-
-Keep this file focused on the public technical handoff:
-
-- a neutral product overview;
-- feature behavior and current integration status;
-- prerequisites and exact development commands;
-- source structure and asset conventions;
-- accessibility, performance, and responsive constraints;
-- verification steps and known technical limitations; and
-- links to detailed project documentation.
-
-Do not put private names, personal schedules, addresses, personal correspondence, raw source photos, private design PDFs, secrets, `.env` values, local QA output, or agent handoff content in this README.
-
-## Publishing checklist
-
-1. Confirm that all public copy and assets are approved.
-2. Confirm the secure email service bindings are present in the production deployment.
-3. Test short and very long postcard messages through the live email and attachment path.
-4. Run `npm run build` and the documented browser checks.
-5. Deploy `dist/` to the chosen static host.
-6. Add and push the intended source files to the remote repository manually.
-
-## Editorial redesign preview
-The page order is handcrafted paper-theatre opening, date reveal, celebrations without a separate invitation hero, original story map and photographic interlude, postcards, then a compact illustrated closing. No commit or deployment is part of this preview.
-
-The photographic interlude now uses the ten selected `RNI-Films-*.JPG` originals with optimized `.webp` derivatives in `public/images`. The carousel keeps the source files for provenance, loads the derivatives for the stage and contact sheet, and updates numbering and navigation from the central `photos` array in `src/components/PhotoCarousel.tsx`.
-
-The original teacup appears with the revealed countdown, and the original couple remains in the closing. Existing original source assets remain untouched.
-
-The supplied black-and-white woodland source is preserved and is displayed only as the first-screen physical photo print. It is not repeated on the scratch-date page.
-
-The opening artwork uses bespoke generated paper-theatre still lifes with separate desktop and mobile compositions. Its design constraints and provenance are recorded in [`docs/OPENING-ARTWORK.md`](docs/OPENING-ARTWORK.md). The first screen contains no wedding date or venue details.
+Before publishing, run `npm run build` and verify the live Cloudflare Pages email endpoint separately.
