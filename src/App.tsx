@@ -43,7 +43,7 @@ function calendar() {
     "DTSTART:20261021T023000Z",
     `SUMMARY:${icsText("Rishabh & Glyra · Wedding")}`,
     `LOCATION:${icsText(wedding.location)}`,
-    `DESCRIPTION:${icsText("Together with their families. Reception to follow.")}`,
+    `DESCRIPTION:${icsText("Together with their families. Officially boarding forever.")}`,
     "END:VEVENT",
     "END:VCALENDAR",
     "",
@@ -96,7 +96,13 @@ export default function App() {
           href="#main"
           aria-label="Rishabh and Glyra home"
         >
-          R<span>&</span>G
+          <img
+            className="site-logo"
+            src="/images/rishabh-glyra-logo.png"
+            alt="Rishabh and Glyra"
+            width="1254"
+            height="1254"
+          />
         </a>
         <nav aria-label="Invitation">
           <a href="#date">The date</a><a href="#celebrations">The celebrations</a>
@@ -128,15 +134,27 @@ export default function App() {
           <div className="event-grid">
             <article className="event">
               <span className="event-index">01 · THE SEND-OFF</span>
+              <p className="event-intro">
+                After years of long distance, countless flights, and more
+                paperwork than we ever imagined, we’re finally getting married!
+              </p>
+              <p className="event-intro">
+                While our wedding ceremony will take place in Hong Kong, we’d
+                love nothing more than to celebrate this special chapter with
+                our family and friends before we fly.
+              </p>
+              <p className="event-invite">Join us for our wedding send-off celebration</p>
               <h3>Davao City</h3>
               <p className="event-date">17 October 2026 · 6:30 PM</p>
               <div className="event-rule" />
               <p>
-                No formal ceremony, just good food, great company, stories,
-                laughter, and one last celebration before we begin married life.
+                Not a formal ceremony, just good food, great company, love,
+                laughter, and one last celebration before we begin married life
+                together.
               </p>
               <p className="event-footer">
-                Come for the love. Stay for the stories.
+                Your love and support have brought us here, and we’d be honoured
+                to celebrate with you.
               </p>
             </article>
             <article className="event">
@@ -149,7 +167,16 @@ export default function App() {
                 the celebration of our marriage at{" "}
                 <strong>Cotton Tree Drive, Central, Hong Kong.</strong>
               </p>
-              <p className="event-footer">Reception to follow.</p>
+              <figure className="event-teacup">
+                <img
+                  src="/images/teacup-transparent.png"
+                  alt="Illustration of Rishabh and Glyra sitting together in a teacup"
+                  width="627"
+                  height="627"
+                  loading="lazy"
+                />
+              </figure>
+              <p className="event-footer">Officially boarding forever.</p>
               <button className="text-link" onClick={calendar}>
                 Add the wedding to your calendar <span>↗</span>
               </button>
@@ -231,7 +258,14 @@ export default function App() {
               loading="lazy"
             />
           </figure>
-          <span className="footer-monogram">R & G</span>
+          <img
+            className="footer-logo"
+            src="/images/rishabh-glyra-logo.png"
+            alt="Rishabh and Glyra"
+            width="1254"
+            height="1254"
+            loading="lazy"
+          />
           <p>21 October 2026 · Hong Kong</p>
           <a href="#main" className="text-link">
             Back to the beginning ↑

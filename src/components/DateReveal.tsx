@@ -355,15 +355,6 @@ export default function DateReveal({ onCalendar }: { onCalendar: () => void }) {
               </button>
             </div>
           </div>
-          <figure className="date-teacup-keepsake">
-            <img
-              src="/images/teacup-transparent.png"
-              alt="Illustration of Rishabh and Glyra sitting together in a teacup"
-              width="627"
-              height="627"
-              loading="lazy"
-            />
-          </figure>
         </div>
       )}
       </div>

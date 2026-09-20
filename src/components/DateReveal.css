@@ -26,7 +26,7 @@
 
 h1.date-dedication {
   margin: 0 0 30px;
-  font: clamp(38px, 4vw, 54px)/1.2 var(--serif);
+  font: clamp(48px, 5vw, 70px)/1.12 var(--serif);
   letter-spacing: 0;
 }
 
@@ -35,8 +35,9 @@ h1.date-dedication {
 .date-reveal h2 {
   margin: 0;
   font-family: var(--serif, Georgia, serif);
-  font-size: clamp(48px, 6.1vw, 84px);
+  font-size: clamp(32px, 3.8vw, 52px);
   font-weight: 400;
+  font-style: italic;
   line-height: 1.06;
   letter-spacing: -.045em;
 }
@@ -226,21 +227,6 @@ h1.date-dedication {
 
 .apple-calendar-icon { color: #741b29; }
 
-.date-teacup-keepsake {
-  position: absolute;
-  top: 72px;
-  right: 0;
-  width: clamp(118px, 14vw, 145px);
-  margin: 0;
-  transform: rotate(2deg);
-}
-
-.date-teacup-keepsake img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 @keyframes date-appear {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -253,10 +239,6 @@ h1.date-dedication {
 
   .date-countdown-values { gap: 25px; }
 
-  .date-teacup-keepsake {
-    top: 76px;
-    width: 110px;
-  }
 }
 
 @media (max-width: 760px) {
@@ -266,13 +248,6 @@ h1.date-dedication {
     flex-direction: column;
   }
 
-  .date-teacup-keepsake {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: 125px;
-    margin: 25px auto 0;
-  }
 }
 
 @media (max-width: 600px) {
@@ -285,10 +260,10 @@ h1.date-dedication {
 
   h1.date-dedication {
     margin-bottom: 23px;
-    font-size: 36px;
+    font-size: clamp(42px, 10.5vw, 52px);
   }
 
-  .date-reveal h2 { font-size: 49px; }
+  .date-reveal h2 { font-size: clamp(30px, 8.4vw, 38px); }
 
   .date-instruction { max-width: 280px; }
 
@@ -302,7 +277,7 @@ h1.date-dedication {
 }
 
 @media (max-width: 390px) {
-  .date-reveal h2 { font-size: clamp(42px, 12.5vw, 49px); }
+  .date-reveal h2 { font-size: clamp(29px, 9.4vw, 36px); }
 
   .date-circles { gap: 12px; }
 

@@ -159,7 +159,7 @@ Do not put private names, personal schedules, addresses, personal correspondence
 ## Editorial redesign preview
 The page order is handcrafted paper-theatre opening, date reveal, celebrations without a separate invitation hero, original story map and photographic interlude, postcards, then a compact illustrated closing. No commit or deployment is part of this preview.
 
-Photo TODO: add the remaining 4–5 approved photographs as optimized WebP files in `public/images`, then append their source, accurate alt text and approved caption to the `photos` array in `src/components/PhotoCarousel.tsx`. Numbering and navigation update automatically. The preview uses three original photos without duplicates or placeholders.
+The photographic interlude now uses the ten selected `RNI-Films-*.JPG` originals with optimized `.webp` derivatives in `public/images`. The carousel keeps the source files for provenance, loads the derivatives for the stage and contact sheet, and updates numbering and navigation from the central `photos` array in `src/components/PhotoCarousel.tsx`.
 
 The original teacup appears with the revealed countdown, and the original couple remains in the closing. Existing original source assets remain untouched.
 

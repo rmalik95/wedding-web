@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import './PhotoCarousel.css';
 
-// Add the remaining original photographs here when supplied. The stage only renders
-// three full-size frames and the contact sheet scrolls, so a 56-photo set stays light.
 const photos = [
-  { src: 'embrace', alt: 'Rishabh embracing Glyra on a stone balcony', caption: 'My favourite place is next to you.', position: '50% 43%' },
-  { src: 'woodland', alt: 'Rishabh and Glyra looking back together in the woods', caption: 'Every little adventure. Every ordinary day.', position: '50% 45%' },
-  { src: 'balcony', alt: 'Rishabh and Glyra together beside a historic stone building', caption: 'Different places. Always us.', position: '50% 45%' },
+  { src: 'RNI-Films-IMG-05E0EBB1-07C4-4854-A3B6-317F9D15DBD0', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 01', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-3DA1D4CB-A071-4C0A-983E-C241F3D957F6', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 02', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-40224143-07D3-4642-A686-D97C2A0AFFB0', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 03', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-5DC53160-2951-4095-B03C-645B4B63BBC6', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 04', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-8154F193-05BA-482C-AAC5-2F36FEFB9C29', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 05', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-8B663372-8DED-42C8-8065-02E89C466404', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 06', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-9268B4CC-C78B-4091-92D1-AB50164E890B', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 07', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-942DF284-3503-4FE9-9722-73D83B2B7F73', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 08', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-BC8D2004-A44D-4311-9D35-A1E4A2FFC259', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 09', position: '50% 50%' },
+  { src: 'RNI-Films-IMG-D0856C19-F917-4A0D-A962-28F25AA113E4', alt: 'Film photograph from Rishabh and Glyra’s collection, photograph 10', position: '50% 50%' },
 ];
 
 const number = (value: number) => String(value).padStart(2, '0');
@@ -106,22 +111,18 @@ export default function PhotoCarousel() {
           }}
         >
           <button className="album-peek album-peek-previous" type="button" onClick={() => move(-1)} aria-label={`Previous photograph: ${previousPhoto.alt}`}>
-            <img src={`/images/${previousPhoto.src}.webp`} alt="" width="720" height="900" loading="lazy" style={{ objectPosition: previousPhoto.position }} />
+            <img src={`/images/${previousPhoto.src}.webp`} alt="" width="2304" height="1536" loading="lazy" style={{ objectPosition: previousPhoto.position }} />
             <span aria-hidden="true">{number(previousIndex + 1)}</span>
           </button>
 
           <figure className="album-figure" role="group" aria-roledescription="slide" aria-label={`Photograph ${index + 1} of ${photos.length}`}>
             <div className="album-image">
-              <img key={currentPhoto.src} src={`/images/${currentPhoto.src}.webp`} alt={currentPhoto.alt} width="1200" height="980" loading={index === 0 ? 'eager' : 'lazy'} style={{ objectPosition: currentPhoto.position }} />
+              <img key={currentPhoto.src} src={`/images/${currentPhoto.src}.webp`} alt={currentPhoto.alt} width="2304" height="1536" loading={index === 0 ? 'eager' : 'lazy'} style={{ objectPosition: currentPhoto.position }} />
             </div>
-            <figcaption className="album-caption">
-              <span>Plate {number(index + 1)}</span>
-              <p>{currentPhoto.caption}</p>
-            </figcaption>
           </figure>
 
           <button className="album-peek album-peek-next" type="button" onClick={() => move(1)} aria-label={`Next photograph: ${nextPhoto.alt}`}>
-            <img src={`/images/${nextPhoto.src}.webp`} alt="" width="720" height="900" loading="lazy" style={{ objectPosition: nextPhoto.position }} />
+            <img src={`/images/${nextPhoto.src}.webp`} alt="" width="2304" height="1536" loading="lazy" style={{ objectPosition: nextPhoto.position }} />
             <span aria-hidden="true">{number(nextIndex + 1)}</span>
           </button>
         </div>
@@ -147,7 +148,7 @@ export default function PhotoCarousel() {
               aria-pressed={photoIndex === index}
             >
               <span className="album-proof-image">
-                <img src={`/images/${photo.src}.webp`} alt="" width="112" height="126" loading="lazy" style={{ objectPosition: photo.position }} />
+                <img src={`/images/${photo.src}.webp`} alt="" width="2304" height="1536" loading="lazy" style={{ objectPosition: photo.position }} />
               </span>
               <span className="album-proof-number">{number(photoIndex + 1)}</span>
             </button>
