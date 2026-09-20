@@ -74,14 +74,7 @@ export default function OpeningBook({ onOpen }: OpeningBookProps) {
 
       <div className="opening-theatre__title">
         <p>An invitation has arrived for you</p>
-        <h1 id="opening-title">
-          <img
-            src="/images/rishabh-glyra-logo.png"
-            alt="Rishabh and Glyra"
-            width="1254"
-            height="1254"
-          />
-        </h1>
+        <h1 id="opening-title">R <i>&amp;</i> G</h1>
         <span aria-hidden="true" />
       </div>
 

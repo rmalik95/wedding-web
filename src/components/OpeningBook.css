@@ -81,13 +81,6 @@
   -webkit-text-stroke: .35px currentColor;
   text-shadow: 0 1px #fff8e4b8, 0 0 13px #fff8e46b;
 }
-.opening-theatre__title h1 img {
-  display: block;
-  width: clamp(76px, 8vw, 112px);
-  height: auto;
-  margin-inline: auto;
-  filter: drop-shadow(0 1px 1px #fff8e4b8) drop-shadow(0 2px 5px #6a172638);
-}
 .opening-theatre__title h1 i { font-size: .58em; font-style: italic; font-weight: 400; }
 .opening-theatre__title > span {
   display: block;
@@ -147,7 +140,6 @@
   }
   .opening-theatre__title p { font-size: 8px; letter-spacing: .16em; }
   .opening-theatre__title h1 { font-size: clamp(46px, 13vw, 54px); margin: 5px 0 4px; }
-  .opening-theatre__title h1 img { width: clamp(72px, 22vw, 92px); }
 }
 @media (min-width: 701px) and (max-width: 1100px) and (orientation: portrait) {
   .opening-theatre__art { background: #d0aa7e; }
@@ -168,7 +160,6 @@
   }
   .opening-theatre__title p { font-size: clamp(9px, 1.2vw, 12px); }
   .opening-theatre__title h1 { font-size: clamp(54px, 7vw, 76px); }
-  .opening-theatre__title h1 img { width: clamp(86px, 10vw, 112px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .opening-theatre,.opening-theatre *,.opening-theatre *::before,.opening-theatre *::after { transition-duration: .15s !important; transition-delay: 0s !important; }

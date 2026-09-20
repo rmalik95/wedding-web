@@ -53,7 +53,7 @@
   width: 100%;
   height: auto;
 }
-.celebrations .section-heading h2 { font-size: clamp(56px, 6vw, 86px); }
+.celebrations .section-heading h2 { font-size: clamp(46px, 5vw, 68px); }
 .celebrations .section-heading > p {
   max-width: 640px;
   margin-inline: auto;
@@ -63,6 +63,12 @@
 .event-intro {
   max-width: 480px;
   font-size: clamp(15px, 1.2vw, 17px) !important;
+  line-height: 1.7;
+}
+/* Keep the readable event copy consistent across both city columns. */
+.celebrations .event > p:not(.event-date):not(.event-invite):not(.event-footer) {
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.7;
 }
 .event-invite {
@@ -75,20 +81,46 @@
   line-height: 1.5;
   text-transform: uppercase;
 }
+.celebrations .event h3 {
+  margin: 16px 0 6px;
+  font-size: clamp(46px, 4.6vw, 64px);
+  line-height: 1;
+}
 .event-teacup {
   width: clamp(100px, 12vw, 140px);
-  margin: 28px auto 10px;
-  padding: 10px;
-  border-radius: 50%;
-  background: var(--paper);
-  outline: 1px solid #cba65c;
-  outline-offset: 5px;
+  margin: 0;
 }
-.event-teacup img { width: 100%; height: auto; }
+.event-teacup img {
+  width: 100%;
+  height: auto;
+  filter: invert(86%) sepia(20%) saturate(600%) hue-rotate(350deg) brightness(110%) contrast(90%) drop-shadow(0 2px 3px #3b0c1559);
+}
 .event-footer {
-  font-size: 13px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
   font-style: italic;
-  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: .015em;
+  line-height: 1.4;
+}
+.event-keepsake-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 28px;
+  text-align: center;
+}
+.event-keepsake-stack .event-footer {
+  width: auto;
+  max-width: 100%;
+  margin-top: 20px;
+  text-align: center;
+}
+.event-keepsake-stack .event-calendar {
+  display: flex;
+  width: fit-content;
+  margin: 20px 0 0;
+  justify-content: center;
 }
 .footer-logo {
   display: block;
@@ -98,11 +130,12 @@
 }
 @media(max-width:600px) {
   .site-header .monogram { width: 53px; height: 53px; }
-  .celebrations .section-heading h2 { font-size: 49px; }
+  .celebrations .section-heading h2 { font-size: 42px; }
   .celebrations .section-heading > p { font-size: 15px; }
   .event-intro { font-size: 15px !important; }
   .event-invite { font-size: 10px !important; }
   .event-teacup { width: 112px; }
+  .event-keepsake-stack { margin-top: 24px; }
 }
 
 /* The opening remains above this shell until its paper wash reaches site ivory. */

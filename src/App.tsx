@@ -134,6 +134,10 @@ export default function App() {
           <div className="event-grid">
             <article className="event">
               <span className="event-index">01 · THE SEND-OFF</span>
+              <h3>Davao City</h3>
+              <p className="event-date">17 October 2026 · 6:30 PM</p>
+              <div className="event-rule" />
+              <p className="event-invite">Join us for our wedding send-off celebration</p>
               <p className="event-intro">
                 After years of long distance, countless flights, and more
                 paperwork than we ever imagined, we’re finally getting married!
@@ -143,10 +147,6 @@ export default function App() {
                 love nothing more than to celebrate this special chapter with
                 our family and friends before we fly.
               </p>
-              <p className="event-invite">Join us for our wedding send-off celebration</p>
-              <h3>Davao City</h3>
-              <p className="event-date">17 October 2026 · 6:30 PM</p>
-              <div className="event-rule" />
               <p>
                 Not a formal ceremony, just good food, great company, love,
                 laughter, and one last celebration before we begin married life
@@ -167,19 +167,21 @@ export default function App() {
                 the celebration of our marriage at{" "}
                 <strong>Cotton Tree Drive, Central, Hong Kong.</strong>
               </p>
-              <figure className="event-teacup">
-                <img
-                  src="/images/teacup-transparent.png"
-                  alt="Illustration of Rishabh and Glyra sitting together in a teacup"
-                  width="627"
-                  height="627"
-                  loading="lazy"
-                />
-              </figure>
-              <p className="event-footer">Officially boarding forever.</p>
-              <button className="text-link" onClick={calendar}>
-                Add the wedding to your calendar <span>↗</span>
-              </button>
+              <div className="event-keepsake-stack">
+                <figure className="event-teacup">
+                  <img
+                    src="/images/teacup-transparent.png"
+                    alt="Illustration of Rishabh and Glyra sitting together in a teacup"
+                    width="627"
+                    height="627"
+                    loading="lazy"
+                  />
+                </figure>
+                <p className="event-footer">Officially boarding forever.</p>
+                <button className="text-link event-calendar" onClick={calendar}>
+                  Add the wedding to your calendar <span>↗</span>
+                </button>
+              </div>
             </article>
           </div>
           <p className="timezone-note">
