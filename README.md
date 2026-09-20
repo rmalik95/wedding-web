@@ -59,7 +59,6 @@ src/components/postcardExport.ts Paginated postcard PDF generation
 src/lib/postcardEmail.ts          Styled email builder
 public/images/                    Optimized website images
 public/fonts/                     Local fonts and licenses
-docs/                             PRD, QA, artwork, and email documentation
 ```
 
 ## Design and implementation notes
@@ -69,17 +68,3 @@ docs/                             PRD, QA, artwork, and email documentation
 - Original source photographs remain preserved; optimized WebP derivatives are used by the carousel.
 - Postcard artwork is stored as `postcard-*-illustrated.webp`. The original map remains in the story section.
 - The countdown uses `teacup-transparent.png`, and the closing uses `couple-cutout.png`.
-
-## Documentation
-
-- [`docs/PRD.md`](docs/PRD.md): approved scope and acceptance criteria
-- [`docs/QA.md`](docs/QA.md): verification notes
-- [`docs/POSTCARD-ARTWORK.md`](docs/POSTCARD-ARTWORK.md): postcard artwork provenance
-- [`docs/POSTCARD-EMAIL.md`](docs/POSTCARD-EMAIL.md): email and PDF attachment contract
-- [`docs/OPENING-ARTWORK.md`](docs/OPENING-ARTWORK.md): opening artwork provenance
-
-## GitHub tags
-
-The `Topics` line above gives the project keywords in the README. GitHub repository topics are separate from README content: open the repository page, choose **About → gear icon**, add topics under **Topics**, and save. The same topics can also be managed with GitHub CLI or the repository API.
-
-Before publishing, run `npm run build` and verify the live Cloudflare Pages email endpoint separately.
