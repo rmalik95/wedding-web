@@ -37,6 +37,8 @@ npm run preview  # Preview dist locally
 
 The production output is generated in `dist/`. Runtime website assets live in `public/`; `dist/` should not be edited manually.
 
+Original, high-resolution source photography is deliberately kept in the local, ignored `private-assets/original-photos/` directory. Only approved, optimized assets in `public/images/` are deployable.
+
 ## Email delivery
 
 Postcard delivery is implemented through the Cloudflare Pages endpoint and Resend. Configure these in the Pages environment, never in browser code:
@@ -46,6 +48,12 @@ Postcard delivery is implemented through the Cloudflare Pages endpoint and Resen
 - `WISHES_FROM_EMAIL`
 
 The endpoint sends the styled HTML email and the complete postcard PDF attachment. Local Vite preview does not provide the Cloudflare Pages endpoint.
+
+## Deployment security
+
+`public/_headers` supplies the Cloudflare Pages Content Security Policy and browser security headers. Do not weaken the CSP with `unsafe-inline` or `unsafe-eval` without a documented, tested need.
+
+HSTS is intentionally not configured in the repository yet. After the production custom domain serves a valid HTTPS certificate and its subdomain policy has been confirmed, enable it in Cloudflare with a staged `max-age`, then consider `includeSubDomains` only if every subdomain is HTTPS-ready.
 
 ## Project structure
 

@@ -34,6 +34,7 @@ work/
 
 # Private source material used to create the invitation. The optimized
 # derivatives in public/images/ are the only image assets the site needs.
+private-assets/
 /*.jpg
 /*.jpeg
 /*.png

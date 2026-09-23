@@ -13,9 +13,17 @@ const MAX_NAME_LENGTH = 100;
 const MAX_MESSAGE_LENGTH = 12_000;
 const MAX_PDF_BYTES = 8 * 1024 * 1024;
 const EMAIL_ADDRESS = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const API_HEADERS = {
+  'Cache-Control': 'no-store',
+  'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'accelerometer=(), autoplay=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()',
+  'X-Frame-Options': 'DENY',
+};
 
 const imageFor = (destination: string) => `/images/postcard-${destination.toLowerCase().replaceAll(' ', '-')}-illustrated.webp`;
-const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
+const json = (body: unknown, status = 200) => Response.json(body, { status, headers: API_HEADERS });
 
 function recipientEmails(value: string) {
   const recipients = value.split(',').map((email) => email.trim()).filter(Boolean);
